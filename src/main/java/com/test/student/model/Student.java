@@ -9,7 +9,7 @@ package com.test.student.model;
  *
  * @author kalyani
  */
-public class StudentData {
+public class Student {
 
     public int id;
     private String name;
@@ -17,7 +17,7 @@ public class StudentData {
     public int department_id;
     public int d_no;
 
-    public StudentData(int id, String name, long phone, int department_id, int d_no) {
+    public Student(int id, String name, long phone, int department_id, int d_no) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -25,7 +25,7 @@ public class StudentData {
         this.d_no = d_no;
     }
 
-    public void displayStudent() {
+    public void getStudent() {
         System.out.println("Student_ID    Student_Name      MObile_Number");
         System.out.println(" " + id + "           " + name + "            " + phone);
     }
