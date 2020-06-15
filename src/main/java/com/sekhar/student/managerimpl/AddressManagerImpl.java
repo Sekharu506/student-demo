@@ -8,10 +8,6 @@ package com.sekhar.student.managerimpl;
 import com.sekhar.student.manager.AddressManager;
 import com.test.student.model.Address;
 
-/**
- *
- * @author kalyani
- */
 public class AddressManagerImpl implements AddressManager {
 
 	public void addAddress(Address address) {
@@ -20,7 +16,7 @@ public class AddressManagerImpl implements AddressManager {
 
 	public void deleteAddress(int d_no) {
 		for (int i = 0; i < addresses.size(); i++) {
-			if (addresses.get(i).d_no == d_no) {
+			if (addresses.get(i).getDno() == d_no) {
 				addresses.remove(i);
 				System.out.println("Address Removed");
 				break;
@@ -35,7 +31,7 @@ public class AddressManagerImpl implements AddressManager {
 	public Address getAddress(int d_no) {
 		int index = -1;
 		for (int i = 0; i < addresses.size(); i++) {
-			if (addresses.get(i).d_no == d_no) {
+			if (addresses.get(i).getDno() == d_no) {
 				index = i;
 				break;
 			}

@@ -10,45 +10,39 @@ import com.test.student.model.Student;
 
 import java.util.*;
 
-/**
- *
- * @author kalyani
- */
 public class StudentManagerImpl implements StudentManager {
 
-    public void addStudent(Student student) {
-        students.add(student);
-        System.out.println("Student Added");
-    }
+	public void addStudent(Student student) {
+		students.add(student);
+		System.out.println("Student Added");
+	}
 
-    public void deleteStudent(int id) {
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).id == id) {
-                students.remove(i);
-                System.out.println("Student Removed");
-                break;
-            } else {
-                System.out.println("Student Doesnt Found");
-            }
-        }
-    }
+	public void deleteStudent(int id) {
+		for (int i = 0; i < students.size(); i++) {
+			if (students.get(i).getId() == id) {
+				students.remove(i);
+				System.out.println("Student Removed");
+				break;
+			} else {
+				System.out.println("Student Doesnt Found");
+			}
+		}
+	}
 
-    public Student getStudent(int id) {
+	public Student getStudent(int id) {
 
-        int index = -1;
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).id == id) {
-                index = i;
+		int index = -1;
+		for (int i = 0; i < students.size(); i++) {
+			if (students.get(i).getId() == id) {
+				index = i;
 
-            }
-        }
+			}
+		}
 
-        return students.get(index);
-    }
+		return students.get(index);
+	}
 
-    
-
-    public List<Student> getStudents() {
-        return students;
-    }
+	public List<Student> getStudents() {
+		return students;
+	}
 }

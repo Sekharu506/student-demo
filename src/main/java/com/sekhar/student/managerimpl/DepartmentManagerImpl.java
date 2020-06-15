@@ -10,10 +10,6 @@ import java.util.*;
 import com.sekhar.student.manager.DepartmentManager;
 import com.test.student.model.Department;
 
-/**
- *
- * @author kalyani
- */
 public class DepartmentManagerImpl implements DepartmentManager {
 
 	public void addDepartment(Department department) {
@@ -23,7 +19,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 
 	public void deleteDepartment(int department_id) {
 		for (int i = 0; i < departments.size(); i++) {
-			if (departments.get(i).department_id == department_id) {
+			if (departments.get(i).getDepartmentId() == department_id) {
 				departments.remove(i);
 				System.out.println("Department Removed");
 				break;
@@ -37,7 +33,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 	public Department getDepartment(int department_id) {
 		int index = -1;
 		for (int i = 0; i < departments.size(); i++) {
-			if (departments.get(i).department_id == department_id) {
+			if (departments.get(i).getDepartmentId() == department_id) {
 				index = i;
 				break;
 			}

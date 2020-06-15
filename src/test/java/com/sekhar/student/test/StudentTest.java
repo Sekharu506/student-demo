@@ -14,16 +14,13 @@ import com.sekhar.student.managerimpl.AddressManagerImpl;
 
 import java.util.*;
 
-/**
- *
- * @author kalyani
- */
 public class StudentTest {
 
 	Scanner sc = new Scanner(System.in);
 	private StudentManagerImpl studentmanager = new StudentManagerImpl();
 	private AddressManagerImpl addressmanager = new AddressManagerImpl();
 	private DepartmentManagerImpl departmentmanager = new DepartmentManagerImpl();
+	StudentTest studenttest = new StudentTest();
 
 	public static void main(String a[]) {
 		Scanner sc = new Scanner(System.in);
@@ -101,19 +98,23 @@ public class StudentTest {
 	}
 
 	void createStudent() {
-		Student student;
+		Student student = new Student();
 		System.out.println("Enter Student Id");
 		int id = sc.nextInt();
+		student.setid(id);
 		System.out.println("Enter Name");
 		String name = sc.next();
+		student.setName(name);
 		System.out.println("Enter phone");
 		long phone = sc.nextLong();
+		student.setPhone(phone);
 		System.out.println("Enter Department Id");
-		int department_id = sc.nextInt();
+		int departmentId = sc.nextInt();
+		student.setDepartmentId(departmentId);
+
 		System.out.println("Enter DoorNo");
 		int d_no = sc.nextInt();
-
-		student = new Student(id, name, phone, department_id, d_no);
+		student.setDno(d_no);
 
 		studentmanager.addStudent(student);
 
@@ -138,7 +139,8 @@ public class StudentTest {
 		int id = sc.nextInt();
 		try {
 			student = studentmanager.getStudent(id);
-			student.getStudent();
+			System.out.println(" Student ID      Name         Phone");
+			studenttest.displayStudent(student);
 		} catch (Exception e) {
 			System.out.println("Student Not Found");
 		}
@@ -150,19 +152,23 @@ public class StudentTest {
 		int id = sc.nextInt();
 		try {
 			student = studentmanager.getStudent(id);
-			student.getStudent();
+			System.out.println(" Student ID      Name         Phone");
+
+			studenttest.displayStudent(student);
 			Department department;
 			try {
 
-				department = departmentmanager.getDepartment(student.department_id);
-				department.getDepartment();
+				department = departmentmanager.getDepartment(student.getDepartmentId());
+				System.out.println("DepartmentId     DepartmentName   COURSES");
+				studenttest.displayDepartment(department);
 			} catch (Exception e) {
 				System.out.println("Department not Found");
 			}
 			Address address;
 			try {
-				address = addressmanager.getAddress(student.d_no);
-				address.getAddress();
+				address = addressmanager.getAddress(student.getId());
+				System.out.println(" DoorNo  Street    City    Pincode");
+				studenttest.displayAddress(address);
 			} catch (Exception e) {
 				System.out.println("Address Not Found");
 			}
@@ -173,12 +179,14 @@ public class StudentTest {
 	}
 
 	void createDepartment() {
-		Department department;
+		Department department = new Department();
 
 		System.out.println("Enter Department Id");
-		int department_id = sc.nextInt();
+		int departmentId = sc.nextInt();
+		department.setDepartmentId(departmentId);
 		System.out.println("Enter Department Name");
-		String department_name = sc.next();
+		String departmentName = sc.next();
+		department.setDepartmentName(departmentName);
 		System.out.println("Enter how many courses");
 		int course_count = sc.nextInt();
 		System.out.println("Enter " + course_count + " course names");
@@ -186,8 +194,8 @@ public class StudentTest {
 		for (int i = 0; i < course_count; i++) {
 			courses[i] = sc.next();
 		}
+		department.setCourses(courses);
 
-		department = new Department(department_id, department_name, courses);
 		departmentmanager.addDepartment(department);
 	}
 
@@ -197,7 +205,8 @@ public class StudentTest {
 		int department_id = sc.nextInt();
 		try {
 			department = departmentmanager.getDepartment(department_id);
-			department.getDepartment();
+			System.out.println("DepartmentId     DepartmentName   COURSES");
+			studenttest.displayDepartment(department);
 		} catch (Exception e) {
 			System.out.println("Department Details Not Found");
 		}
@@ -216,8 +225,9 @@ public class StudentTest {
 		if (departments.isEmpty()) {
 			System.out.println("NO Departments");
 		} else {
+			System.out.println("DepartmentId     DepartmentName   COURSES");
 			for (int i = 0; i < departments.size(); i++) {
-				departments.get(i).getDepartment();
+				studenttest.displayDepartment(departments.get(i));
 				System.out.println();
 				System.out.println();
 				System.out.println();
@@ -228,15 +238,19 @@ public class StudentTest {
 	}
 
 	void createAddress(int d_no) {
-		Address address;
-
+		Address address = new Address();
+		address.setDno(d_no);
 		System.out.println("Enter Street");
+
 		String street = sc.next();
+		address.setStreet(street);
 		System.out.println("Enter City");
 		String city = sc.next();
+		address.setCity(city);
 		System.out.println("Enter pin");
 		int pin = sc.nextInt();
-		address = new Address(d_no, street, city, pin);
+		address.setPin(pin);
+
 		addressmanager.addAddress(address);
 
 	}
@@ -255,22 +269,27 @@ public class StudentTest {
 		if (students.isEmpty()) {
 			System.out.println("NO Students Availble");
 		} else {
+			System.out.println(" Student ID      Name         Phone");
+
 			for (int i = 0; i < students.size(); i++) {
 				System.out.println();
 				System.out.println();
-				students.get(i).getStudent();
+				studenttest.displayStudent(students.get(i));
 				Department department;
 				try {
-					department = departmentmanager.getDepartment(students.get(i).department_id);
-					department.getDepartment();
+					department = departmentmanager.getDepartment(students.get(i).getDepartmentId());
+					System.out.println("DepartmentId     DepartmentName   COURSES");
+					studenttest.displayDepartment(department);
 				} catch (Exception e) {
 					System.out.println("Department details Not Found");
 				}
 
 				Address address;
 				try {
-					address = addressmanager.getAddress(students.get(i).d_no);
-					address.getAddress();
+					address = addressmanager.getAddress(students.get(i).getDno());
+					System.out.println(" DoorNo  Street    City    Pincode");
+					studenttest.displayAddress(address);
+
 				} catch (Exception e) {
 					System.out.println("No Address Availble");
 				}
@@ -280,4 +299,21 @@ public class StudentTest {
 
 	}
 
+	public void displayStudent(Student student) {
+		System.out.println(" " + student.getId() + "       " + student.getName() + "         " + student.getPhone());
+	}
+
+	public void displayDepartment(Department department) {
+		System.out.print(" " + department.getDepartmentId() + "           " + department.getDepartmentName());
+		String[] courses = department.getCourses();
+		for (int i = 0; i < courses.length; i++) {
+			String course = courses[i];
+			System.out.print(course + "        ");
+		}
+	}
+
+	public void displayAddress(Address address) {
+		System.out.println(" " + address.getDno() + "         " + address.getStreet() + "           "
+				+ address.getCity() + "          " + address.getPin());
+	}
 }

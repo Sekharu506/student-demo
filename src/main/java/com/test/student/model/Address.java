@@ -5,27 +5,44 @@
  */
 package com.test.student.model;
 
-/**
- *
- * @author kalyani
- */
 public class Address {
 
-	public int d_no;
+	private int d_no;
 	private String street;
 	private String city;
 	private int pin;
 
-	public Address(int d_no, String street, String city, int pin) {
+	public void setDno(int d_no) {
 		this.d_no = d_no;
+	}
+
+	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public void setCity(String city) {
 		this.city = city;
-		this.pin = pin;
 
 	}
 
-	public void getAddress() {
-		System.out.println("DoorNo    Street      city       pin");
-		System.out.println(" " + d_no + "      " + street + "      " + city + "      " + pin);
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+	public int getDno() {
+		return d_no;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getCity() {
+		return city;
+
+	}
+
+	public int getPin() {
+		return pin;
 	}
 }

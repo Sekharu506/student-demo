@@ -9,10 +9,6 @@ import java.util.*;
 
 import com.test.student.model.Student;
 
-/**
- *
- * @author kalyani
- */
 public interface StudentManager {
 
 	int TOTAL_STUDENTS = 20;

@@ -5,31 +5,33 @@
  */
 package com.test.student.model;
 
-/**
- *
- * @author kalyani
- */
 public class Department {
 
-	public int department_id;
-	private String department_name;
+	private int departmentId;
+	private String departmentName;
 	private String[] courses;
 
-	public Department(int department_id, String department_name, String[] courses) {
-		this.department_id = department_id;
-		this.department_name = department_name;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public void setCourses(String courses[]) {
 		this.courses = courses;
-
 	}
 
-	public void getDepartment() {
-		System.out.println("Department_ID     Department_Name");
-		System.out.println(" " + department_id + "                      " + department_name);
-		System.out.println("Courses");
-		for (int i = 0; i < courses.length; i++) {
-			System.out.println();
-			System.out.println(courses[i]);
-		}
+	public int getDepartmentId() {
+		return departmentId;
 	}
 
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public String[] getCourses() {
+		return courses;
+	}
 }

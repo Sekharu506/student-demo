@@ -9,10 +9,6 @@ import java.util.*;
 
 import com.test.student.model.Department;
 
-/**
- *
- * @author kalyani
- */
 public interface DepartmentManager {
 
 	int TOTAL_DEPARTMENTS = 10;

@@ -10,10 +10,6 @@ import java.util.ArrayList;
 
 import com.test.student.model.Address;
 
-/**
- *
- * @author kalyani
- */
 public interface AddressManager {
 
 	int TOTAL_ADDRESS = 10;

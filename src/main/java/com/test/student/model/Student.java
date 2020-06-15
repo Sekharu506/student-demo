@@ -5,29 +5,55 @@
  */
 package com.test.student.model;
 
-/**
- *
- * @author kalyani
- */
 public class Student {
 
-    public int id;
-    private String name;
-    private long phone;
-    public int department_id;
-    public int d_no;
+	private int id;
+	private String name;
+	private long phone;
+	private int departmentId;
+	private int d_no;
 
-    public Student(int id, String name, long phone, int department_id, int d_no) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.department_id = department_id;
-        this.d_no = d_no;
-    }
+	public void setid(int id) {
+		this.id = id;
+	}
 
-    public void getStudent() {
-        System.out.println("Student_ID    Student_Name      MObile_Number");
-        System.out.println(" " + id + "           " + name + "            " + phone);
-    }
+	public void setName(String name)
 
+	{
+		this.name = name;
+	}
+
+	public void setPhone(long phone) {
+		this.phone = phone;
+
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+
+	}
+
+	public void setDno(int d_no) {
+		this.d_no = d_no;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public long getPhone() {
+		return phone;
+	}
+
+	public int getDepartmentId() {
+		return departmentId;
+	}
+
+	public int getDno() {
+		return d_no;
+	}
 }
