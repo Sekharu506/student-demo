@@ -5,20 +5,16 @@
  */
 package com.sekhar.student.manager;
 
-import java.util.*;
-import java.util.ArrayList;
-
 import com.test.student.model.Address;
+import java.util.Set;
 
 public interface AddressManager {
 
-	int TOTAL_ADDRESS = 10;
-	List<Address> addresses = new ArrayList<Address>(TOTAL_ADDRESS);
-
 	public void addAddress(Address address);
 
-	public void deleteAddress(int d_no);
+	public void deleteAddress(int doorNo);
 
-	public Address getAddress(int d_no);
+	public Address getAddress(int doorNo);
 
+	public Set<Address> getAddresses();
 }

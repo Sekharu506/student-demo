@@ -20,12 +20,12 @@ public class StudentTest {
 	private StudentManagerImpl studentmanager = new StudentManagerImpl();
 	private AddressManagerImpl addressmanager = new AddressManagerImpl();
 	private DepartmentManagerImpl departmentmanager = new DepartmentManagerImpl();
-	StudentTest studenttest = new StudentTest();
 
 	public static void main(String a[]) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter your Choice");
 		StudentTest studenttest = new StudentTest();
+		System.out.println("Enter your Choice");
+
 		do {
 			System.out.println("Enter 1 To Add Student");
 			System.out.println("Enter 2 To Remove Student");
@@ -37,6 +37,7 @@ public class StudentTest {
 			System.out.println("Enter 8 To Remove Department");
 			System.out.println("Enter 9 To Show Departments");
 			System.out.println("Enter 10  To Remove Address");
+			System.out.println("Enter 11 To Sort Student List");
 
 			System.out.println("Enter 0 To Terimante");
 
@@ -88,6 +89,10 @@ public class StudentTest {
 				studenttest.removeAddress();
 				break;
 
+			case 11:
+				studenttest.sortStudents();
+				break;
+
 			default:
 				System.out.println("Entered Invalid Option");
 
@@ -101,7 +106,7 @@ public class StudentTest {
 		Student student = new Student();
 		System.out.println("Enter Student Id");
 		int id = sc.nextInt();
-		student.setid(id);
+		student.setId(id);
 		System.out.println("Enter Name");
 		String name = sc.next();
 		student.setName(name);
@@ -113,18 +118,17 @@ public class StudentTest {
 		student.setDepartmentId(departmentId);
 
 		System.out.println("Enter DoorNo");
-		int d_no = sc.nextInt();
-		student.setDno(d_no);
+		int doorNo = sc.nextInt();
+		student.setDno(doorNo);
 
 		studentmanager.addStudent(student);
 
 		Address address;
-		try {
-			address = addressmanager.getAddress(d_no);
-		} catch (Exception e) {
 
-			createAddress(d_no);
-		}
+		address = addressmanager.getAddress(doorNo);
+		if (address == null)
+			createAddress(doorNo);
+
 	}
 
 	void removeStudent() {
@@ -137,11 +141,12 @@ public class StudentTest {
 		Student student;
 		System.out.println("Enter Student ID");
 		int id = sc.nextInt();
-		try {
-			student = studentmanager.getStudent(id);
+
+		student = studentmanager.getStudent(id);
+		if (student != null) {
 			System.out.println(" Student ID      Name         Phone");
-			studenttest.displayStudent(student);
-		} catch (Exception e) {
+			System.out.println(student.toString());
+		} else {
 			System.out.println("Student Not Found");
 		}
 	}
@@ -150,29 +155,36 @@ public class StudentTest {
 		Student student;
 		System.out.println("Enter Student Id");
 		int id = sc.nextInt();
-		try {
-			student = studentmanager.getStudent(id);
+
+		student = studentmanager.getStudent(id);
+		if (student != null) {
 			System.out.println(" Student ID      Name         Phone");
 
-			studenttest.displayStudent(student);
+			System.out.println(student.toString());
 			Department department;
-			try {
 
-				department = departmentmanager.getDepartment(student.getDepartmentId());
+			department = departmentmanager.getDepartment(student.getDepartmentId());
+			if (department != null) {
+				System.out.println();
 				System.out.println("DepartmentId     DepartmentName   COURSES");
-				studenttest.displayDepartment(department);
-			} catch (Exception e) {
-				System.out.println("Department not Found");
+				System.out.println(department.toString());
+			} else {
+				System.out.println("Department Not Found");
 			}
 			Address address;
-			try {
-				address = addressmanager.getAddress(student.getId());
+
+			address = addressmanager.getAddress(student.getId());
+			if (address != null) {
+				System.out.println();
 				System.out.println(" DoorNo  Street    City    Pincode");
-				studenttest.displayAddress(address);
-			} catch (Exception e) {
+				System.out.println(address.toString());
+			}
+
+			else {
 				System.out.println("Address Not Found");
 			}
-		} catch (Exception e) {
+		} else {
+
 			System.out.println("Student Not Found");
 		}
 
@@ -187,11 +199,9 @@ public class StudentTest {
 		System.out.println("Enter Department Name");
 		String departmentName = sc.next();
 		department.setDepartmentName(departmentName);
-		System.out.println("Enter how many courses");
-		int course_count = sc.nextInt();
-		System.out.println("Enter " + course_count + " course names");
-		String[] courses = new String[course_count];
-		for (int i = 0; i < course_count; i++) {
+		System.out.println("Enter Courses");
+		String[] courses = new String[3];
+		for (int i = 0; i < 3; i++) {
 			courses[i] = sc.next();
 		}
 		department.setCourses(courses);
@@ -202,44 +212,45 @@ public class StudentTest {
 	void showDepartment() {
 		Department department;
 		System.out.println("Enter Department Id");
-		int department_id = sc.nextInt();
-		try {
-			department = departmentmanager.getDepartment(department_id);
+		int departmentId = sc.nextInt();
+
+		department = departmentmanager.getDepartment(departmentId);
+		if (department != null) {
 			System.out.println("DepartmentId     DepartmentName   COURSES");
-			studenttest.displayDepartment(department);
-		} catch (Exception e) {
-			System.out.println("Department Details Not Found");
+			System.out.println(department.toString());
+
+		} else {
+			System.out.println("Department Not Found");
+
 		}
+
 	}
 
 	void removeDepartment() {
 		System.out.println("Enter Department Id");
-		int department_id = sc.nextInt();
-		departmentmanager.deleteDepartment(department_id);
+		int departmentId = sc.nextInt();
+		departmentmanager.deleteDepartment(departmentId);
 	}
 
 	void showDepartments() {
-		List<Department> departments;
+		Set<Department> departments;
 
 		departments = departmentmanager.getDepartments();
 		if (departments.isEmpty()) {
 			System.out.println("NO Departments");
 		} else {
 			System.out.println("DepartmentId     DepartmentName   COURSES");
-			for (int i = 0; i < departments.size(); i++) {
-				studenttest.displayDepartment(departments.get(i));
-				System.out.println();
-				System.out.println();
-				System.out.println();
-
+			Iterator<Department> iterator = departments.iterator();
+			while (iterator.hasNext()) {
+				System.out.println(iterator.next().toString());
 			}
 		}
 
 	}
 
-	void createAddress(int d_no) {
+	void createAddress(int doorNo) {
 		Address address = new Address();
-		address.setDno(d_no);
+		address.setDno(doorNo);
 		System.out.println("Enter Street");
 
 		String street = sc.next();
@@ -257,63 +268,73 @@ public class StudentTest {
 
 	void removeAddress() {
 		System.out.println("Enter DoorNo");
-		int d_no = sc.nextInt();
-		addressmanager.deleteAddress(d_no);
+		int doorNo = sc.nextInt();
+		addressmanager.deleteAddress(doorNo);
 
 	}
 
-	void showAllStudentFullDetails() {
-		List<Student> students;
+	public void sortStudents() {
 
-		students = studentmanager.getStudents();
-		if (students.isEmpty()) {
-			System.out.println("NO Students Availble");
-		} else {
-			System.out.println(" Student ID      Name         Phone");
-
-			for (int i = 0; i < students.size(); i++) {
-				System.out.println();
-				System.out.println();
-				studenttest.displayStudent(students.get(i));
-				Department department;
-				try {
-					department = departmentmanager.getDepartment(students.get(i).getDepartmentId());
-					System.out.println("DepartmentId     DepartmentName   COURSES");
-					studenttest.displayDepartment(department);
-				} catch (Exception e) {
-					System.out.println("Department details Not Found");
-				}
-
-				Address address;
-				try {
-					address = addressmanager.getAddress(students.get(i).getDno());
-					System.out.println(" DoorNo  Street    City    Pincode");
-					studenttest.displayAddress(address);
-
-				} catch (Exception e) {
-					System.out.println("No Address Availble");
-				}
+		List<Student> studentslist = new ArrayList<Student>();
+		Student student;
+		studentslist = studentmanager.sortStudentsById(studentmanager.getStudents());
+		if (studentslist != null) {
+			System.out.println("StudentID   Name    Phone    DepartmentID  DoorNo");
+			for (int i = 0; i < studentslist.size(); i++) {
+				student = studentslist.get(i);
+				System.out.println(" " + student.getId() + "  " + student.getName() + "      " + student.getPhone()
+						+ "      " + student.getDepartmentId() + "    " + student.getDno());
 
 			}
 		}
 
-	}
-
-	public void displayStudent(Student student) {
-		System.out.println(" " + student.getId() + "       " + student.getName() + "         " + student.getPhone());
-	}
-
-	public void displayDepartment(Department department) {
-		System.out.print(" " + department.getDepartmentId() + "           " + department.getDepartmentName());
-		String[] courses = department.getCourses();
-		for (int i = 0; i < courses.length; i++) {
-			String course = courses[i];
-			System.out.print(course + "        ");
+		else {
+			System.out.println("No Students List");
 		}
+
 	}
 
-	public void displayAddress(Address address) {
-		System.out.println(" " + address.getDno() + "         " + address.getStreet() + "           "
-				+ address.getCity() + "          " + address.getPin());
+	void showAllStudentFullDetails() {
+		Set<Student> students;
+		students = studentmanager.getStudents();
+
+		if (students.isEmpty()) {
+			System.out.println("NO Students Availble");
+		} else {
+
+			Iterator<Student> iterator1 = students.iterator();
+
+			Student student;
+			Department department;
+			Address address;
+			while (iterator1.hasNext()) {
+
+				System.out.println(" Student ID      Name         Phone");
+				student = iterator1.next();
+				System.out.println(student.toString());
+
+				department = departmentmanager.getDepartment(student.getDepartmentId());
+				if (department == null) {
+					System.out.println("Department Not Exist");
+				} else {
+					System.out.println();
+					System.out.println("DepartmentId     DepartmentName   COURSES");
+					System.out.println(department.toString());
+				}
+				address = addressmanager.getAddress(student.getDno());
+				if (address == null) {
+					System.out.println("Address Not Created");
+
+				} else {
+					System.out.println();
+					System.out.println(" DoorNo       Street       City        PinCode");
+					System.out.println(address.toString());
+				}
+
+			}
+
+		}
+
 	}
+
 }

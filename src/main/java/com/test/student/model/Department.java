@@ -11,6 +11,16 @@ public class Department {
 	private String departmentName;
 	private String[] courses;
 
+	public Department() {
+
+	}
+
+	public Department(int departmentId, String departmentName, String[] courses) {
+		this.departmentId = departmentId;
+		this.departmentName = departmentName;
+		this.courses = courses;
+	}
+
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
 	}
@@ -34,4 +44,22 @@ public class Department {
 	public String[] getCourses() {
 		return courses;
 	}
+
+	public boolean equals(Department department) {
+		if (this.departmentId == department.getDepartmentId())
+			return true;
+		else
+			return false;
+
+	}
+
+	public int hashCode() {
+		return departmentId+departmentName.hashCode()+courses.hashCode();
+	}
+
+	public String toString() {
+		return " " + departmentId + "         " + departmentName + "         " + courses[0] + "        " + courses[1]
+				+ "         " + courses[2];
+	}
+
 }

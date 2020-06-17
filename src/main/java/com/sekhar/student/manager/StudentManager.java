@@ -11,15 +11,12 @@ import com.test.student.model.Student;
 
 public interface StudentManager {
 
-	int TOTAL_STUDENTS = 20;
-	List<Student> students = new ArrayList<Student>(TOTAL_STUDENTS);
-
 	public void addStudent(Student student);
 
 	public void deleteStudent(int id);
 
 	public Student getStudent(int id);
 
-	public List<Student> getStudents();
-
+	public Set<Student> getStudents();
+    public List<Student>  sortStudentsById(Set<Student> students);
 }

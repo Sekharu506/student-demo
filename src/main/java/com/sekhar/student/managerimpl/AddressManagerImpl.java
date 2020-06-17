@@ -5,38 +5,76 @@
  */
 package com.sekhar.student.managerimpl;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
+
 import com.sekhar.student.manager.AddressManager;
 import com.test.student.model.Address;
 
 public class AddressManagerImpl implements AddressManager {
 
+	Set<Address> addresses = new HashSet<Address>();
+
 	public void addAddress(Address address) {
 		addresses.add(address);
 	}
 
-	public void deleteAddress(int d_no) {
-		for (int i = 0; i < addresses.size(); i++) {
-			if (addresses.get(i).getDno() == d_no) {
-				addresses.remove(i);
-				System.out.println("Address Removed");
-				break;
-			} else {
-				System.out.println("Address not Found");
+	public void deleteAddress(int doorNo) {
+		if (!addresses.isEmpty()) {
+			Address address;
+			int found = 0;
+			Iterator<Address> iterator = addresses.iterator();
+
+			while (iterator.hasNext()) {
+
+				address = iterator.next();
+
+				if (address.getDno() == doorNo) {
+					found = 1;
+					System.out.println(" " + address.getStreet() + " removed");
+					addresses.remove(address);
+					break;
+
+				}
+
 			}
 
+			if (found == 0) {
+				System.out.println(" Address Not Found");
+			}
+		} else {
+			System.out.println("No Address List");
 		}
 
 	}
 
-	public Address getAddress(int d_no) {
-		int index = -1;
-		for (int i = 0; i < addresses.size(); i++) {
-			if (addresses.get(i).getDno() == d_no) {
-				index = i;
-				break;
-			}
+	public Address getAddress(int doorNo) {
+		if (!addresses.isEmpty()) {
+			Address address;
+			int found = 0;
+			Iterator<Address> iterator = addresses.iterator();
+			do {
+				address = iterator.next();
 
+				if (address.getDno() == doorNo) {
+					found = 1;
+					break;
+				}
+
+			} while (iterator.hasNext());
+
+			if (found == 1) {
+				return address;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
 		}
-		return addresses.get(index);
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
 	}
 }

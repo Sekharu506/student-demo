@@ -11,14 +11,11 @@ import com.test.student.model.Department;
 
 public interface DepartmentManager {
 
-	int TOTAL_DEPARTMENTS = 10;
-	List<Department> departments = new ArrayList<Department>(TOTAL_DEPARTMENTS);
-
 	public void addDepartment(Department department);
 
-	public void deleteDepartment(int department_id);
+	public void deleteDepartment(int departmentId);
 
-	public Department getDepartment(int department_id);
+	public Department getDepartment(int departmentId);
 
-	public List<Department> getDepartments();
+	public Set<Department> getDepartments();
 }

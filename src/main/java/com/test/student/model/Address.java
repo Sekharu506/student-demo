@@ -7,13 +7,26 @@ package com.test.student.model;
 
 public class Address {
 
-	private int d_no;
+	private int doorNo;
 	private String street;
 	private String city;
 	private int pin;
 
-	public void setDno(int d_no) {
-		this.d_no = d_no;
+	public Address() {
+
+	}
+
+	public Address(int doorNo, String street, String city, int pin) {
+
+		this.doorNo = doorNo;
+		this.street = street;
+		this.city = city;
+		this.pin = pin;
+
+	}
+
+	public void setDno(int doorNo) {
+		this.doorNo = doorNo;
 	}
 
 	public void setStreet(String street) {
@@ -30,7 +43,7 @@ public class Address {
 	}
 
 	public int getDno() {
-		return d_no;
+		return doorNo;
 	}
 
 	public String getStreet() {
@@ -44,5 +57,21 @@ public class Address {
 
 	public int getPin() {
 		return pin;
+	}
+
+	public boolean equals(Address address) {
+		if (this.doorNo == address.getDno())
+			return true;
+		else
+			return false;
+
+	}
+
+	public int hashCode() {
+		return doorNo+street.hashCode()+city.hashCode()+pin;
+	}
+
+	public String toString() {
+		return " " + doorNo + "         " + street + "          " + city + "         " + pin;
 	}
 }

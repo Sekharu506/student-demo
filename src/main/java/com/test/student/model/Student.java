@@ -11,9 +11,21 @@ public class Student {
 	private String name;
 	private long phone;
 	private int departmentId;
-	private int d_no;
+	private int doorNo;
 
-	public void setid(int id) {
+	public Student() {
+
+	}
+
+	public Student(int id, String name, long phone, int departmentId, int doorNo) {
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.departmentId = departmentId;
+		this.doorNo = doorNo;
+	}
+
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -33,8 +45,8 @@ public class Student {
 
 	}
 
-	public void setDno(int d_no) {
-		this.d_no = d_no;
+	public void setDno(int doorNo) {
+		this.doorNo = doorNo;
 	}
 
 	public int getId() {
@@ -54,6 +66,21 @@ public class Student {
 	}
 
 	public int getDno() {
-		return d_no;
+		return doorNo;
+	}
+
+	public boolean equals(Student student) {
+		if (this.id == student.getId())
+			return true;
+		else
+			return false;
+	}
+
+	public int hashCode() {
+		return id+name.hashCode();
+	}
+
+	public String toString() {
+		return " " + id + "           " + name + "           " + phone;
 	}
 }
