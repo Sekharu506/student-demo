@@ -6,9 +6,9 @@
 package com.sekhar.student.test;
 
 import com.sekhar.student.managerimpl.StudentManagerImpl;
-import com.test.student.model.Address;
-import com.test.student.model.Department;
-import com.test.student.model.Student;
+import com.sekhar.student.model.Address;
+import com.sekhar.student.model.Department;
+import com.sekhar.student.model.Student;
 import com.sekhar.student.managerimpl.DepartmentManagerImpl;
 import com.sekhar.student.managerimpl.AddressManagerImpl;
 
