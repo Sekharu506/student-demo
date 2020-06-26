@@ -1,12 +1,12 @@
-package com.sekhar.student.dao.db;
+package com.sekhar.student.dao.student;
 
 import com.sekhar.student.model.*;
 
-public interface DBStudentDao {
+public interface DBBasedStudentDao {
 
 	public void insertStudent(Student student);
 
-	public void updateStudent(int id);
+	public void updateStudent(Student student);
 
 	public Student getStudent(int id);
 

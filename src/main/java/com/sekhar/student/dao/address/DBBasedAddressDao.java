@@ -1,8 +1,8 @@
-package com.sekhar.student.dao.db;
+package com.sekhar.student.dao.address;
 
 import com.sekhar.student.model.*;
 
-public interface DBAddressDao {
+public interface DBBasedAddressDao {
 
 	public void insertAddress(Address address);
 
@@ -10,6 +10,7 @@ public interface DBAddressDao {
 
 	public void updateAddress(int doorNo);
 
-	public void getAddress(int doorNo);
+	public Address getAddress(int doorNo);
+	public Address[] getAddresses();
 
 }

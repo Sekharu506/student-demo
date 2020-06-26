@@ -1,11 +1,11 @@
-package com.sekhar.student.dao.inmemory.impl;
+package com.sekhar.student.dao.department.impl;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import com.sekhar.student.model.Department;
-import com.sekhar.student.dao.inmemory.*;
+import com.sekhar.student.dao.department.InMemoryBasedDepartmentDao;
 
 public class InMemoryBasedDepartmentDaoImpl implements InMemoryBasedDepartmentDao {
 	Set<Department> departments = new HashSet<Department>();

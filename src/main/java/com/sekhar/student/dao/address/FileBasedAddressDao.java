@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.file;
+package com.sekhar.student.dao.address;
 
 public interface FileBasedAddressDao {
 

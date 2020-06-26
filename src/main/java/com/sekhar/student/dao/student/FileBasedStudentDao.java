@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.file;
+package com.sekhar.student.dao.student;
 
 import java.io.File;
 

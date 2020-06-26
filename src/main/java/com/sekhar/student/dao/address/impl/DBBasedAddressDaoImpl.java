@@ -1,5 +1,5 @@
-package com.sekhar.student.dao.db.impl;
-
-public class DBAddressDaoImpl {
+package com.sekhar.student.dao.address.impl;
+import com.sekhar.student.dao.address.DBBasedAddressDao;
+public class DBBasedAddressDaoImpl implements DBBasedAddressDao{
 
 }

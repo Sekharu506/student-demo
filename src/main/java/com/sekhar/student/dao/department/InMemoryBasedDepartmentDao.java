@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.inmemory;
+package com.sekhar.student.dao.department;
 
 import java.util.Set;
 

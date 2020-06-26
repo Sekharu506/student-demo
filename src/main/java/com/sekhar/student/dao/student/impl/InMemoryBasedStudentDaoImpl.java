@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.inmemory.impl;
+package com.sekhar.student.dao.student.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.sekhar.student.model.Student;
-import com.sekhar.student.dao.inmemory.*;
 
-public class InMemeoryBasedStudentDaoImpl implements InMemoryBasedStudentDao {
-	Set<Student> students = new HashSet<Student>();
+import com.sekhar.student.dao.student.InMemoryBasedStudentDao;
+
+public class InMemoryBasedStudentDaoImpl implements InMemoryBasedStudentDao {
+	private Set<Student> students = new HashSet<Student>();
 
 	public void addStudent(Student student) {
 		students.add(student);
@@ -72,7 +73,7 @@ public class InMemeoryBasedStudentDaoImpl implements InMemoryBasedStudentDao {
 		return students;
 	}
 
-	public List<Student> sortStudentsById(Set<Student> students) {
+	public List<Student> sortStudentsById() {
 
 		if (!students.isEmpty()) {
 

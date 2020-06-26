@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.file.impl;
+package com.sekhar.student.dao.student.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import com.sekhar.student.model.*;
-import com.sekhar.student.dao.file.*;
+
+import com.sekhar.student.dao.student.FileBasedStudentDao;
 
 public class FileBasedStudentDaoImpl implements FileBasedStudentDao {
 

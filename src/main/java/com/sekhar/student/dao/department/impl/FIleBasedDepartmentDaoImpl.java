@@ -1,4 +1,4 @@
-package com.sekhar.student.dao.file.impl;
+package com.sekhar.student.dao.department.impl;
 
 public class FIleBasedDepartmentDaoImpl {
 

@@ -1,8 +1,7 @@
-package com.sekhar.student.dao.inmemory;
+package com.sekhar.student.dao.student;
 
 import java.util.List;
 import java.util.Set;
-
 import com.sekhar.student.model.Student;
 
 public interface InMemoryBasedStudentDao {
@@ -14,6 +13,6 @@ public interface InMemoryBasedStudentDao {
 
 	public Set<Student> getStudents();
 
-	public List<Student> sortStudentsById(Set<Student> students);
+	public List<Student> sortStudentsById();
 
 }

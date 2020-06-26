@@ -1,5 +1,5 @@
-package com.sekhar.student.dao.db.impl;
+package com.sekhar.student.dao.department.impl;
 
-public class DBDepartmentDaoImpl {
+public class DBBasedDepartmentDaoImpl {
 
 }

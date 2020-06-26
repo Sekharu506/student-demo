@@ -1,11 +1,11 @@
-package com.sekhar.student.dao.inmemory.impl;
+package com.sekhar.student.dao.address.impl;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.sekhar.student.dao.address.InMemoryBasedAddressDao;
 import com.sekhar.student.model.Address;
-import com.sekhar.student.dao.inmemory.*;
 
 public class InMemoryBasedAddressDaoImpl implements InMemoryBasedAddressDao {
 	Set<Address> addresses = new HashSet<Address>();
