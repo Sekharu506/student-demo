@@ -8,9 +8,10 @@ public interface DBBasedAddressDao {
 
 	public void deleteAddress(int doorNO);
 
-	public void updateAddress(int doorNo);
+	public void updateAddress(Address address);
 
 	public Address getAddress(int doorNo);
+
 	public Address[] getAddresses();
 
 }

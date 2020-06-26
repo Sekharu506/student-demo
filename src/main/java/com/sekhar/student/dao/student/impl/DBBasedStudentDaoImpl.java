@@ -145,7 +145,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 					students[i].setPhone(resultset.getLong("phone"));
 					students[i].setDepartmentId(resultset.getInt("departmentId"));
 					students[i].setDno(resultset.getInt("doorNo"));
-
+					i++;
 				}
 				return students;
 

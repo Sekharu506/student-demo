@@ -7,7 +7,7 @@ public interface DBBasedDepartmentDao {
 
 	public void deleteDepartment(int departmentId);
 
-	public void updateDepartment(int departmentId);
+	public void updateDepartment(Department department);
 
 	public Department getDepartment(int departmentId);
 
