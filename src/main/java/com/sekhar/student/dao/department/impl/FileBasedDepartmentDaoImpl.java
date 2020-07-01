@@ -1,4 +1,7 @@
-package com.sekhar.student.dao.address.impl;
+package com.sekhar.student.dao.department.impl;
+
+import com.sekhar.student.model.Department;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,12 +9,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.sekhar.student.model.Address;
 
-import com.sekhar.student.dao.address.FileBasedAddressDao;
+import com.sekhar.student.dao.department.FileBasedDepartmentDao;
 
-
-public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
+public class FileBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
 	private File file;
 	private String path;
 	private String filename;
@@ -46,7 +47,8 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 		}
 		return tempfile;
 	}
-	public void addAddress(Address address) {
+
+	public void addDepartment(Department department) {
 		if (file.exists()) {
 			try {
 				FileOutputStream fout = new FileOutputStream(file);
@@ -55,8 +57,8 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 					ObjectOutputStream fileobject = new ObjectOutputStream(fout);
 
-					fileobject.writeObject(address);
-					System.out.println(" " + address.getDno() + " Added");
+					fileobject.writeObject(department);
+					System.out.println(" " + department.getDepartmentId() + " Added");
 
 					fileobject.close();
 				} catch (IOException e) {
@@ -73,11 +75,11 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 	}
 
-	public void deleteAddress(int doorNo) {
+	public void deleteDepartment(int departmentId) {
 		File file2;
 		file2 = createFileObject("temp.txt");
 		if (file.exists() && file2.exists()) {
-			Address address;
+			Department department;
 			try {
 				FileInputStream fin = new FileInputStream(file);
 				FileOutputStream fout = new FileOutputStream(file2);
@@ -88,12 +90,12 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 					do {
 						try {
 
-							address = (Address) fileobjectin.readObject();
+							department = (Department) fileobjectin.readObject();
 
-							if (address.getDno() == doorNo) {
+							if (department.getDepartmentId() == departmentId) {
 								continue;
 							} else {
-								fileobjectout.writeObject(address);
+								fileobjectout.writeObject(department);
 							}
 						}
 
@@ -125,10 +127,10 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 	}
 
-	public Address getAddress(int doorNO) {
+	public Department getDepartment(int departmentId) {
 
 		if (file.exists()) {
-			Address address;
+			Department department;
 
 			try {
 				FileInputStream fin = new FileInputStream(file);
@@ -137,10 +139,10 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 					do {
 						try {
-							address= (Address) fileobject.readObject();
+							department = (Department) fileobject.readObject();
 
-							if (address.getDno() == doorNO) {
-								return address;
+							if (department.getDepartmentId() == departmentId) {
+								return department;
 
 							}
 
@@ -171,10 +173,10 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 	}
 
-	public Address[] getAddresses() {
+	public Department[] getDepartments() {
 
 		if (file.exists()) {
-			Address[] addresses = new Address[100];
+			Department[] departments = new Department[100];
 
 			try {
 				FileInputStream fin = new FileInputStream(file);
@@ -184,7 +186,7 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 					int i = 0;
 					do {
 						try {
-							addresses[i] = (Address) fileobject.readObject();
+							departments[i] = (Department) fileobject.readObject();
 
 							i++;
 
@@ -196,7 +198,7 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 					} while (true);
 					fileobject.close();
-					return addresses;
+					return departments;
 
 				}
 
@@ -216,6 +218,5 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 		}
 
 	}
-
 
 }
