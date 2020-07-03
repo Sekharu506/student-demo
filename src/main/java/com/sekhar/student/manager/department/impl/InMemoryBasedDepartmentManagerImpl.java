@@ -38,4 +38,14 @@ public class InMemoryBasedDepartmentManagerImpl implements DepartmentManager {
 
 	}
 
+	public void updateDepartment(Department department) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void makeFile(String path, String filename) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

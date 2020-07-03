@@ -42,4 +42,9 @@ public class FileBasedDepartmentManagerImpl implements DepartmentManager {
 		return departments;
 	}
 
+	public void updateDepartment(Department department) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

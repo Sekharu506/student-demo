@@ -43,4 +43,9 @@ public class DBBasedStudentManagerImpl implements StudentManager {
 
 	}
 
+	public void makeFile(String path, String filename) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

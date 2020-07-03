@@ -1,9 +1,8 @@
-package com.sekhar.student.manager.student;
+package com.sekhar.student.service.student;
 
 import com.sekhar.student.model.Student;
 
-public interface StudentManager {
-
+public interface StudentService {
 	public void makeFile(String path, String filename);
 
 	public void updateStudent(Student student);
@@ -12,8 +11,8 @@ public interface StudentManager {
 
 	public void removeStudent(int id);
 
-	public Student getStudent(int id);
+	public void getStudent(int id);
 
-	public Student[] getStudents();
+	public void getStudents();
 
 }

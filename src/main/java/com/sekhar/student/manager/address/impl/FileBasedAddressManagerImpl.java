@@ -48,4 +48,9 @@ public class FileBasedAddressManagerImpl implements AddressManager {
 		return addresses;
 	}
 
+	public void updateAddress(Address address) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

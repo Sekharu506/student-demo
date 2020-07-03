@@ -41,4 +41,14 @@ public class DBBasedAddressManagerImpl implements AddressManager {
 
 		return addresses;
 	}
+
+	public void makeFile(String path, String filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void updateAddress(Address address) {
+		addressdao.updateAddress(address);
+
+	}
 }

@@ -52,4 +52,14 @@ public class InMemoryBasedStudentManagerImpl implements StudentManager {
 
 	}
 
+	public void makeFile(String path, String filename) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateStudent(Student student) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

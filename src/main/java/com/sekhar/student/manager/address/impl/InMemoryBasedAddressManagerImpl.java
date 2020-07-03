@@ -45,4 +45,14 @@ public class InMemoryBasedAddressManagerImpl implements AddressManager {
 		addresses.toArray(addressarray);
 		return addressarray;
 	}
+
+	public void makeFile(String path, String filename) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void updateAddress(Address address) {
+		// TODO Auto-generated method stub
+
+	}
 }
