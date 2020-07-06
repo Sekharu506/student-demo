@@ -8,18 +8,13 @@ import com.sekhar.student.dao.student.impl.FileBasedStudentDaoImpl;
 public class FileBasedStudentManagerImpl implements StudentManager {
 	FileBasedStudentDao studentdao;
 
-	public FileBasedStudentManagerImpl()
+	public FileBasedStudentManagerImpl(String path, String filename)
 
 	{
-		studentdao = new FileBasedStudentDaoImpl();
+		studentdao = new FileBasedStudentDaoImpl(path, filename);
 	}
 
-	public void makeFile(String path, String filename) {
-		studentdao.createFile(path, filename);
-
-	}
-
-	public void setStudent(Student student) {
+	public void addStudent(Student student) {
 		studentdao.addStudent(student);
 	}
 
@@ -43,7 +38,7 @@ public class FileBasedStudentManagerImpl implements StudentManager {
 
 	public void updateStudent(Student student) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Student[] sortStudents() {

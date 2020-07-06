@@ -14,8 +14,10 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
-	public void makeFile(String path, String filename) {
-		studentmanager.makeFile(path, filename);
+	public StudentServiceImpl(String persistence, String path, String filename) {
+
+		studentmanager = StudentManagerFactory.getStudentManagerInstance(persistence, path, filename);
+
 	}
 
 	public void updateStudent(Student student) {
@@ -23,9 +25,9 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
-	public void setStudent(Student student) {
+	public void addStudent(Student student) {
 
-		studentmanager.setStudent(student);
+		studentmanager.addStudent(student);
 
 	}
 

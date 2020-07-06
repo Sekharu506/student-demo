@@ -1,4 +1,5 @@
 package com.sekhar.student.dao.address.impl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,13 +11,12 @@ import com.sekhar.student.model.Address;
 
 import com.sekhar.student.dao.address.FileBasedAddressDao;
 
-
 public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 	private File file;
 	private String path;
 	private String filename;
 
-	public void createFile(String path, String filename) {
+	public FileBasedAddressDaoImpl(String path, String filename) {
 		this.path = path;
 		this.filename = filename;
 		file = createFileObject(filename);
@@ -46,6 +46,7 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 		}
 		return tempfile;
 	}
+
 	public void addAddress(Address address) {
 		if (file.exists()) {
 			try {
@@ -137,7 +138,7 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 
 					do {
 						try {
-							address= (Address) fileobject.readObject();
+							address = (Address) fileobject.readObject();
 
 							if (address.getDno() == doorNO) {
 								return address;
@@ -216,6 +217,5 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 		}
 
 	}
-
 
 }

@@ -4,9 +4,7 @@ import com.sekhar.student.model.Department;
 
 public interface DepartmentService {
 
-	public void makeFile(String path, String filename);
-
-	public void setDepartment(Department department);
+	public void addDepartment(Department department);
 
 	public void removeDepartment(int departmentId);
 

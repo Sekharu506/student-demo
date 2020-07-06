@@ -15,7 +15,7 @@ public class DBBasedDepartmentManagerImpl implements DepartmentManager {
 		departmentdao = new DBBasedDepartmentDaoImpl();
 	}
 
-	public void setDepartment(Department department) {
+	public void addDepartment(Department department) {
 
 		departmentdao.insertDepartment(department);
 	}
@@ -41,11 +41,6 @@ public class DBBasedDepartmentManagerImpl implements DepartmentManager {
 		Department[] departments = new Department[100];
 		departments = getDepartments();
 		return departments;
-	}
-
-	public void makeFile(String path, String filename) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

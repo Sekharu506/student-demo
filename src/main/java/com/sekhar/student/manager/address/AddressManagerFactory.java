@@ -4,10 +4,8 @@ import com.sekhar.student.manager.address.impl.*;
 
 public class AddressManagerFactory {
 
-	private static String persistence;
-
 	public static AddressManager getAddresssManagerInstance(String persistence) {
-		AddressManagerFactory.persistence = persistence;
+
 		AddressManager addressmanager = null;
 
 		if (persistence == "IN_MEMORY") {
@@ -18,12 +16,17 @@ public class AddressManagerFactory {
 
 			addressmanager = new DBBasedAddressManagerImpl();
 
-		} else if (persistence == "FILE") {
-
-			addressmanager = new FileBasedAddressManagerImpl();
-
 		}
 
+		return addressmanager;
+
+	}
+
+	public static AddressManager getAddressManagerInstance(String persistence, String path, String filename) {
+
+		AddressManager addressmanager;
+
+		addressmanager = new FileBasedAddressManagerImpl(path, filename);
 		return addressmanager;
 
 	}

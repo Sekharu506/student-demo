@@ -25,15 +25,22 @@ public class DepartmentTest {
 
 		System.out.println("Enter Where To Store Data");
 		String persistence = sc.next();
-		service = new DepartmentServiceImpl(persistence);
 
 		if (persistence == "IN_MEMORY") {
+			service = new DepartmentServiceImpl(persistence);
+
 			studenttest.InMemory();
 
 		} else if (persistence == "DB") {
-
+			service = new DepartmentServiceImpl(persistence);
 			studenttest.Db();
 		} else if (persistence == "FILE") {
+			System.out.println("Enter File Path");
+			String path = sc.next();
+			System.out.println("Enter File Name");
+			String filename = sc.next();
+			service = new DepartmentServiceImpl(persistence, path, filename);
+
 			studenttest.File();
 		}
 
@@ -50,12 +57,12 @@ public class DepartmentTest {
 		int choice;
 
 		do {
-			System.out.println("Enter 1 To Create File");
-			System.out.println("Enter 2 To Add Department");
-			System.out.println("Enter 3 To Remove Department");
 
-			System.out.println("Enter 4 To Dispaly Department");
-			System.out.println("Enter 5 To Display Departments");
+			System.out.println("Enter 1 To Add Department");
+			System.out.println("Enter 2 To Remove Department");
+
+			System.out.println("Enter 3 To Dispaly Department");
+			System.out.println("Enter 4 To Display Departments");
 			System.out.println("Enter 0 to Exist");
 
 			choice = sc.nextInt();
@@ -64,15 +71,8 @@ public class DepartmentTest {
 
 			case 0:
 				System.exit(1);
-			case 1:
-				System.out.println("Enter File Path");
-				String path = sc.next();
-				System.out.println("Enter File Name");
-				String filename = sc.next();
-				service.makeFile(path, filename);
-				break;
 
-			case 2:
+			case 1:
 				Department department = new Department();
 				System.out.println("Enter Department Id");
 				int departmentId = sc.nextInt();
@@ -86,19 +86,19 @@ public class DepartmentTest {
 				courses[1] = sc.next();
 				courses[3] = sc.next();
 				department.setCourses(courses);
-				service.setDepartment(department);
+				service.addDepartment(department);
 				break;
-			case 3:
+			case 2:
 				System.out.println("Enter Department Id");
 				departmentId = sc.nextInt();
 				service.removeDepartment(departmentId);
 				break;
-			case 4:
+			case 3:
 				System.out.println("Enter Department ID");
 				departmentId = sc.nextInt();
 				service.getDepartment(departmentId);
 				break;
-			case 5:
+			case 4:
 				service.getDepartments();
 				break;
 			default:
@@ -144,7 +144,7 @@ public class DepartmentTest {
 				courses[1] = sc.next();
 				courses[3] = sc.next();
 				department.setCourses(courses);
-				service.setDepartment(department);
+				service.addDepartment(department);
 				break;
 			case 2:
 				System.out.println("Enter Department Id");
@@ -220,7 +220,7 @@ public class DepartmentTest {
 				courses[1] = sc.next();
 				courses[3] = sc.next();
 				department.setCourses(courses);
-				service.setDepartment(department);
+				service.addDepartment(department);
 				break;
 			case 2:
 				System.out.println("Enter Department Id");

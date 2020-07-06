@@ -14,7 +14,7 @@ public class DBBasedAddressManagerImpl implements AddressManager {
 
 	}
 
-	public void setAddress(Address address) {
+	public void addAddress(Address address) {
 
 		addressdao.insertAddress(address);
 		System.out.println("Address Added");
@@ -40,11 +40,6 @@ public class DBBasedAddressManagerImpl implements AddressManager {
 		Address[] addresses = addressdao.getAddresses();
 
 		return addresses;
-	}
-
-	public void makeFile(String path, String filename) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void updateAddress(Address address) {

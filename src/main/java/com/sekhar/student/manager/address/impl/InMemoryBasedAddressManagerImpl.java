@@ -16,7 +16,7 @@ public class InMemoryBasedAddressManagerImpl implements AddressManager {
 		// if some thing true then addressdao = new
 	}
 
-	public void setAddress(Address address) {
+	public void addAddress(Address address) {
 
 		addressdao.addAddress(address);
 		System.out.println("Address Added");
@@ -44,11 +44,6 @@ public class InMemoryBasedAddressManagerImpl implements AddressManager {
 		Address[] addressarray = new Address[size];
 		addresses.toArray(addressarray);
 		return addressarray;
-	}
-
-	public void makeFile(String path, String filename) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void updateAddress(Address address) {

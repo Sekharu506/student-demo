@@ -6,9 +6,10 @@ import java.util.Scanner;
 import com.sekhar.student.model.Address;
 
 public class AddressTest {
-	Scanner sc = new Scanner(System.in);
-	StudentTest studenttest = new StudentTest();
-	AddressService service;
+	private Scanner sc = new Scanner(System.in);
+	private StudentTest studenttest = new StudentTest();
+	private AddressService service = null;
+	private String persistence = null;
 
 	public static void main(String a[])
 
@@ -22,16 +23,24 @@ public class AddressTest {
 	public void persistenceChoose() {
 
 		System.out.println("Enter Where To Store Data");
-		String persistence = sc.next();
-		service = new AddressServiceImpl(persistence);
+		this.persistence = sc.next();
 
 		if (persistence == "IN_MEMORY") {
+			service = new AddressServiceImpl(persistence);
 			studenttest.InMemory();
 
 		} else if (persistence == "DB") {
-
+			service = new AddressServiceImpl(persistence);
 			studenttest.Db();
 		} else if (persistence == "FILE") {
+
+			System.out.println("Enter File Path");
+			String path = sc.next();
+			System.out.println("Enter File Name");
+			String filename = sc.next();
+
+			service = new AddressServiceImpl(persistence, path, filename);
+
 			studenttest.File();
 		}
 
@@ -43,6 +52,7 @@ public class AddressTest {
 	}
 
 	public void Inmemory() {
+
 		System.out.println("Enter Your Choice");
 		int choice;
 		do {
@@ -72,7 +82,7 @@ public class AddressTest {
 				System.out.println("Enter Pincode");
 				int pin = sc.nextInt();
 				address.setPin(pin);
-				service.setAddress(address);
+				service.addAddress(address);
 				break;
 
 			case 2:
@@ -128,7 +138,7 @@ public class AddressTest {
 				System.out.println("Enter Pincode");
 				int pin = sc.nextInt();
 				address.setPin(pin);
-				service.setAddress(address);
+				service.addAddress(address);
 				break;
 
 			case 2:
@@ -151,7 +161,7 @@ public class AddressTest {
 				System.out.println("Enter Pincode");
 				pin = sc.nextInt();
 				address.setPin(pin);
-				service.setAddress(address);
+				service.addAddress(address);
 				break;
 
 			case 4:
@@ -174,7 +184,7 @@ public class AddressTest {
 		System.out.println("Enter Your Choice");
 		int choice;
 		do {
-			System.out.println("Enter 1 To Create File");
+
 			System.out.println("Enter 1 To Add Address");
 			System.out.println("Enter 2 To Remove Address");
 			System.out.println("Enter 3 To Display Address");
@@ -185,15 +195,8 @@ public class AddressTest {
 			switch (choice) {
 			case 0:
 				System.exit(1);
-			case 1:
-				System.out.println("Enter File Path");
-				String path = sc.next();
-				System.out.println("Enter File Name");
-				String filename = sc.next();
-				service.makeFile(path, filename);
-				break;
 
-			case 2:
+			case 1:
 				Address address = new Address();
 				System.out.println("Enter Dno");
 
@@ -208,21 +211,21 @@ public class AddressTest {
 				System.out.println("Enter Pincode");
 				int pin = sc.nextInt();
 				address.setPin(pin);
-				service.setAddress(address);
+				service.addAddress(address);
 				break;
 
-			case 3:
+			case 2:
 				System.out.println("Enter DoorNo");
 				doorNo = sc.nextInt();
 				service.removeAddress(doorNo);
 				break;
 
-			case 4:
+			case 3:
 				System.out.println("Enter DoorNo");
 				doorNo = sc.nextInt();
 				service.getAddress(doorNo);
 				break;
-			case 5:
+			case 4:
 				service.getAddresses();
 				break;
 			default:

@@ -10,13 +10,13 @@ import com.sekhar.student.dao.department.DBBasedDepartmentDao;
 import com.sekhar.student.model.Department;
 
 public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/demo";
-	static final String USER = "root";
-	static final String PASS = "root123";
-	Connection connection = null;
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DB_URL = "jdbc:mysql://localhost/demo";
+	private static final String USER = "root";
+	private static final String PASS = "root123";
+	private Connection connection = null;
 
-	public void registerDriver() {
+	public DBBasedDepartmentDaoImpl() {
 		try {
 			Class.forName(JDBC_DRIVER);
 		} catch (ClassNotFoundException e) {
@@ -31,9 +31,7 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
 	}
 
 	public void insertDepartment(Department department) {
-		if (connection == null) {
-			registerDriver();
-		}
+
 		try {
 			PreparedStatement statement = connection.prepareStatement("insert into department values(?,?,?,?,?);");
 			statement.setInt(1, department.getDepartmentId());
@@ -58,8 +56,7 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
 	}
 
 	public void deleteDepartment(int departmentId) {
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection.prepareStatement("delete from department where departmentId=?;");
 			statement.setInt(1, departmentId);
@@ -77,9 +74,7 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
 	}
 
 	public void updateDepartment(Department department) {
-		if (connection == null)
 
-			registerDriver();
 		try {
 
 			PreparedStatement statement = connection.prepareStatement(
@@ -102,8 +97,7 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
 	}
 
 	public Department getDepartment(int departmentId) {
-		if (connection == null)
-			registerDriver();
+
 		Department department = new Department();
 		try {
 			PreparedStatement statement = connection.prepareStatement("select * from department where departmentId=?;");
@@ -135,8 +129,7 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
 	}
 
 	public Department[] getDepartments() {
-		if (connection == null)
-			registerDriver();
+
 		Department[] departments;
 		try {
 			PreparedStatement statement = connection.prepareStatement("select * from department;");

@@ -1,14 +1,8 @@
 package com.sekhar.student.dao.student;
 
-import java.io.File;
-
 import com.sekhar.student.model.*;
 
 public interface FileBasedStudentDao {
-
-	public void createFile(String path, String filename);
-
-	public File createFileObject(String filename);
 
 	public void addStudent(Student student);
 

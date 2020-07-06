@@ -12,7 +12,11 @@ import com.sekhar.student.model.Student;
 import com.sekhar.student.dao.student.InMemoryBasedStudentDao;
 
 public class InMemoryBasedStudentDaoImpl implements InMemoryBasedStudentDao {
-	private Set<Student> students = new HashSet<Student>();
+	private Set<Student> students;
+
+	public InMemoryBasedStudentDaoImpl() {
+		students = new HashSet<Student>();
+	}
 
 	public void addStudent(Student student) {
 		students.add(student);

@@ -8,7 +8,11 @@ import com.sekhar.student.model.Department;
 import com.sekhar.student.dao.department.InMemoryBasedDepartmentDao;
 
 public class InMemoryBasedDepartmentDaoImpl implements InMemoryBasedDepartmentDao {
-	Set<Department> departments = new HashSet<Department>();
+	Set<Department> departments;
+
+	public InMemoryBasedDepartmentDaoImpl() {
+		departments = new HashSet<Department>();
+	}
 
 	public void addDepartment(Department department) {
 		departments.add(department);

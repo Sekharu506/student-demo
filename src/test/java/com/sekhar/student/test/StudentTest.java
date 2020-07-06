@@ -24,15 +24,23 @@ public class StudentTest {
 
 		System.out.println("Enter Where To Store Data");
 		String persistence = sc.next();
-		service = new StudentServiceImpl(persistence);
 
 		if (persistence == "IN_MEMORY") {
+			service = new StudentServiceImpl(persistence);
+
 			studenttest.InMemory();
 
 		} else if (persistence == "DB") {
-
+			service = new StudentServiceImpl(persistence);
 			studenttest.Db();
 		} else if (persistence == "FILE") {
+
+			System.out.println("Enter File Path");
+			String path = sc.next();
+			System.out.println("Enter File Name");
+			String filename = sc.next();
+			service = new StudentServiceImpl(persistence, path, filename);
+
 			studenttest.File();
 		}
 
@@ -50,12 +58,12 @@ public class StudentTest {
 		do
 
 		{
-			System.out.println("Enter 1 To Create File");
-			System.out.println("Enter 2 To Add Student");
-			System.out.println("Enter 3 To Remove Student");
 
-			System.out.println("Enter 4 To Display Student");
-			System.out.println("Enter 5 To Display Students");
+			System.out.println("Enter 1 To Add Student");
+			System.out.println("Enter 2 To Remove Student");
+
+			System.out.println("Enter 3 To Display Student");
+			System.out.println("Enter 4 To Display Students");
 			System.out.println("Enter 0 To Exist");
 
 			;
@@ -65,13 +73,6 @@ public class StudentTest {
 				System.exit(1);
 
 			case 1:
-				System.out.println("Enter File Path");
-				String path = sc.next();
-				System.out.println("Enter File Name");
-				String filename = sc.next();
-				service.makeFile(path, filename);
-
-			case 2:
 				Student student = new Student();
 				System.out.println("Enter Student id");
 				int id = sc.nextInt();
@@ -88,19 +89,19 @@ public class StudentTest {
 				System.out.println("Enter Door No");
 				int doorNo = sc.nextInt();
 				student.setDno(doorNo);
-				service.setStudent(student);
+				service.addStudent(student);
 				break;
-			case 3:
+			case 2:
 				System.out.println("Enter Student Id");
 				id = sc.nextInt();
 				service.removeStudent(id);
 				break;
-			case 4:
+			case 3:
 				System.out.println("Enter Student id");
 				id = sc.nextInt();
 				service.getStudent(id);
 				break;
-			case 5:
+			case 4:
 				service.getStudents();
 				break;
 			default:
@@ -149,7 +150,7 @@ public class StudentTest {
 				System.out.println("Enter Door No");
 				int doorNo = sc.nextInt();
 				student.setDno(doorNo);
-				service.setStudent(student);
+				service.addStudent(student);
 				break;
 			case 2:
 				System.out.println("Enter Student Id");
@@ -229,7 +230,7 @@ public class StudentTest {
 				System.out.println("Enter Door No");
 				int doorNo = sc.nextInt();
 				student.setDno(doorNo);
-				service.setStudent(student);
+				service.addStudent(student);
 				break;
 			case 2:
 				System.out.println("Enter Student Id");

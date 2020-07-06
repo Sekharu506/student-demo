@@ -15,7 +15,7 @@ public class InMemoryBasedDepartmentManagerImpl implements DepartmentManager {
 
 	}
 
-	public void setDepartment(Department department) {
+	public void addDepartment(Department department) {
 		departmentdao.addDepartment(department);
 
 	}
@@ -40,12 +40,7 @@ public class InMemoryBasedDepartmentManagerImpl implements DepartmentManager {
 
 	public void updateDepartment(Department department) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	public void makeFile(String path, String filename) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

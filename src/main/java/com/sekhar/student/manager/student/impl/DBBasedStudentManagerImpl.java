@@ -12,7 +12,7 @@ public class DBBasedStudentManagerImpl implements StudentManager {
 		studentdao = new DBBasedStudentDaoImpl();
 	}
 
-	public void setStudent(Student student) {
+	public void addStudent(Student student) {
 		studentdao.insertStudent(student);
 
 	}
@@ -41,11 +41,6 @@ public class DBBasedStudentManagerImpl implements StudentManager {
 		students = studentdao.getStudents();
 		return students;
 
-	}
-
-	public void makeFile(String path, String filename) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public Student[] sortStudents() {

@@ -10,13 +10,14 @@ import com.sekhar.student.dao.address.DBBasedAddressDao;
 
 public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/demo";
-	static final String USER = "root";
-	static final String PASS = "root123";
-	Connection connection = null;
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DB_URL = "jdbc:mysql://localhost/demo";
+	private static final String USER = "root";
+	private static final String PASS = "root123";
+	private Connection connection = null;
 
-	public void registerDriver() {
+	public DBBasedAddressDaoImpl() {
+
 		try {
 			Class.forName(JDBC_DRIVER);
 		} catch (ClassNotFoundException e) {
@@ -31,8 +32,7 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	}
 
 	public void insertAddress(Address address) {
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection.prepareStatement("insert into address values(?,?,?,?);");
 			statement.setInt(1, address.getDno());
@@ -55,8 +55,7 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	}
 
 	public void deleteAddress(int doorNo) {
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection.prepareStatement("delete from address where doorNo=?;");
 			statement.setInt(1, doorNo);
@@ -74,8 +73,7 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	}
 
 	public void updateAddress(Address address) {
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("update address set doorNo=?,street=?,city=?,pin=? where doorNo=?;");
@@ -98,8 +96,7 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	}
 
 	public Address getAddress(int doorNo) {
-		if (connection == null)
-			registerDriver();
+
 		Address address = new Address();
 		try {
 
@@ -127,8 +124,7 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	}
 
 	public Address[] getAddresses() {
-		if (connection == null)
-			registerDriver();
+
 		Address[] addresses;
 
 		try {

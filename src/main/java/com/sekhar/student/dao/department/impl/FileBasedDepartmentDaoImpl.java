@@ -17,7 +17,7 @@ public class FileBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
 	private String path;
 	private String filename;
 
-	public void createFile(String path, String filename) {
+	public FileBasedDepartmentDaoImpl(String path, String filename) {
 		this.path = path;
 		this.filename = filename;
 		file = createFileObject(filename);

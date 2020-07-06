@@ -12,13 +12,13 @@ import com.sekhar.student.dao.student.DBBasedStudentDao;
 
 public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/demo";
-	static final String USER = "root";
-	static final String PASS = "root123";
-	Connection connection = null;
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DB_URL = "jdbc:mysql://localhost/demo";
+	private static final String USER = "root";
+	private static final String PASS = "root123";
+	private Connection connection = null;
 
-	public void registerDriver() {
+	public DBBasedStudentDaoImpl() {
 		try {
 			Class.forName(JDBC_DRIVER);
 		} catch (ClassNotFoundException e) {
@@ -34,8 +34,6 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 
 	public void insertStudent(Student student) {
 
-		if (connection == null)
-			registerDriver();
 		try {
 			PreparedStatement statement = connection.prepareStatement("insert into student values(?,?,?,?,?);");
 
@@ -57,8 +55,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 	}
 
 	public void updateStudent(Student student) {
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("update student set id=?,name=?,phone=?,departmentId=?,doorNo=? where id=?;");
@@ -85,8 +82,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 	public Student getStudent(int id)
 
 	{
-		if (connection == null)
-			registerDriver();
+
 		Student student = new Student();
 		try {
 			PreparedStatement statement = connection.prepareStatement("select * from student where id=?;");
@@ -122,8 +118,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 	}
 
 	public Student[] getStudents() {
-		if (connection == null)
-			registerDriver();
+
 		Student[] students;
 		try {
 			PreparedStatement statement = connection.prepareStatement("select * from student;");
@@ -161,8 +156,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 	public void deleteStudent(int id)
 
 	{
-		if (connection == null)
-			registerDriver();
+
 		try {
 			PreparedStatement statement = connection.prepareStatement("delete * from student where id=?;");
 			statement.setInt(1, id);

@@ -8,16 +8,11 @@ import com.sekhar.student.dao.department.impl.FileBasedDepartmentDaoImpl;
 public class FileBasedDepartmentManagerImpl implements DepartmentManager {
 	FileBasedDepartmentDao departmentdao;
 
-	public FileBasedDepartmentManagerImpl() {
-		departmentdao = new FileBasedDepartmentDaoImpl();
+	public FileBasedDepartmentManagerImpl(String path, String filename) {
+		departmentdao = new FileBasedDepartmentDaoImpl(path, filename);
 	}
 
-	public void makeFile(String path, String filename) {
-		departmentdao.createFile(path, filename);
-
-	}
-
-	public void setDepartment(Department department) {
+	public void addDepartment(Department department) {
 
 		departmentdao.addDepartment(department);
 
@@ -44,7 +39,7 @@ public class FileBasedDepartmentManagerImpl implements DepartmentManager {
 
 	public void updateDepartment(Department department) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

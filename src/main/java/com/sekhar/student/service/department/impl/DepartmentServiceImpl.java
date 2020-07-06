@@ -9,19 +9,20 @@ public class DepartmentServiceImpl implements DepartmentService {
 	DepartmentManager departmentmanager;
 
 	public DepartmentServiceImpl(String persistence) {
+
 		departmentmanager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence);
 
 	}
 
-	public void makeFile(String path, String filename) {
+	public DepartmentServiceImpl(String persistence, String path, String filename) {
 
-		departmentmanager.makeFile(path, filename);
+		departmentmanager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence, path, filename);
 
 	}
 
-	public void setDepartment(Department department) {
+	public void addDepartment(Department department) {
 
-		departmentmanager.setDepartment(department);
+		departmentmanager.addDepartment(department);
 
 	}
 

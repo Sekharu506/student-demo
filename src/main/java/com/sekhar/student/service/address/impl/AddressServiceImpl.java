@@ -13,15 +13,14 @@ public class AddressServiceImpl implements AddressService {
 
 	}
 
-	public void makeFile(String path, String filename) {
-
-		addressmanager.makeFile(path, filename);
+	public AddressServiceImpl(String persistence, String path, String filename) {
+		addressmanager = AddressManagerFactory.getAddressManagerInstance(persistence, path, filename);
 
 	}
 
-	public void setAddress(Address address) {
+	public void addAddress(Address address) {
 
-		addressmanager.setAddress(address);
+		addressmanager.addAddress(address);
 
 	}
 
@@ -62,7 +61,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	public void updateAddress(Address address) {
-addressmanager.updateAddress(address);
+		addressmanager.updateAddress(address);
 
 	}
 
