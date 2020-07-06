@@ -63,4 +63,10 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
+	public void sort() {
+		Student[] students = studentmanager.sortStudents();
+		for (int i = 0; i < students.length; i++) {
+			students[i].toString();
+		}
+	}
 }

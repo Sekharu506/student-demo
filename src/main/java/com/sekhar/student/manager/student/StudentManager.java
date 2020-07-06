@@ -16,4 +16,6 @@ public interface StudentManager {
 
 	public Student[] getStudents();
 
+	public Student[] sortStudents();
+
 }

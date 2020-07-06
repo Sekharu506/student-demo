@@ -48,4 +48,9 @@ public class DBBasedStudentManagerImpl implements StudentManager {
 		
 	}
 
+	public Student[] sortStudents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

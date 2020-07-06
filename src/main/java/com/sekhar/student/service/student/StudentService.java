@@ -15,4 +15,6 @@ public interface StudentService {
 
 	public void getStudents();
 
+	public void sort();
+
 }
