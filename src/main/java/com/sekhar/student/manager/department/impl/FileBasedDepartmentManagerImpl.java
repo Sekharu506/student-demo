@@ -6,34 +6,34 @@ import com.sekhar.student.dao.department.FileBasedDepartmentDao;
 import com.sekhar.student.dao.department.impl.FileBasedDepartmentDaoImpl;
 
 public class FileBasedDepartmentManagerImpl implements DepartmentManager {
-	FileBasedDepartmentDao departmentdao;
+	private FileBasedDepartmentDao departmentDao;
 
-	public FileBasedDepartmentManagerImpl(String path, String filename) {
-		departmentdao = new FileBasedDepartmentDaoImpl(path, filename);
+	public FileBasedDepartmentManagerImpl() {
+		departmentDao = new FileBasedDepartmentDaoImpl();
 	}
 
 	public void addDepartment(Department department) {
 
-		departmentdao.addDepartment(department);
+		departmentDao.addDepartment(department);
 
 	}
 
 	public void removeDepartment(int departmentId) {
 
-		departmentdao.deleteDepartment(departmentId);
+		departmentDao.deleteDepartment(departmentId);
 	}
 
 	public Department getDepartment(int departmentId) {
 		Department department;
 
-		department = departmentdao.getDepartment(departmentId);
+		department = departmentDao.getDepartment(departmentId);
 		return department;
 	}
 
 	public Department[] getDepartments() {
 		Department[] departments = new Department[100];
 
-		departments = departmentdao.getDepartments();
+		departments = departmentDao.getDepartments();
 		return departments;
 	}
 

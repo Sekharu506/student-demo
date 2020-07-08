@@ -6,38 +6,38 @@ import com.sekhar.student.dao.address.FileBasedAddressDao;
 import com.sekhar.student.dao.address.impl.FileBasedAddressDaoImpl;
 
 public class FileBasedAddressManagerImpl implements AddressManager {
-	FileBasedAddressDao addressdao;
+	private FileBasedAddressDao addressDao;
 
-	public FileBasedAddressManagerImpl(String path, String filename)
+	public FileBasedAddressManagerImpl()
 
 	{
-		addressdao = new FileBasedAddressDaoImpl(path, filename);
+		addressDao = new FileBasedAddressDaoImpl();
 
 	}
 
 	public void addAddress(Address address) {
 
-		addressdao.addAddress(address);
+		addressDao.addAddress(address);
 
 	}
 
 	public void removeAddress(int doorNo) {
 
-		addressdao.deleteAddress(doorNo);
+		addressDao.deleteAddress(doorNo);
 
 	}
 
 	public Address getAddress(int doorNo) {
 
 		Address address;
-		address = addressdao.getAddress(doorNo);
+		address = addressDao.getAddress(doorNo);
 		return address;
 	}
 
 	public Address[] getAddresses() {
 
 		Address[] addresses = new Address[100];
-		addresses = addressdao.getAddresses();
+		addresses = addressDao.getAddresses();
 
 		return addresses;
 	}

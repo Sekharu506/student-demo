@@ -18,9 +18,9 @@ public class FileBasedStudentDaoImpl implements FileBasedStudentDao {
 	private String path;
 	private String filename;
 
-	public FileBasedStudentDaoImpl(String path, String filename) {
-		this.path = path;
-		this.filename = filename;
+	public FileBasedStudentDaoImpl() {
+		this.path = "home/cultuzz/";
+		this.filename = "test.txt";
 		file = createFileObject(filename);
 
 	}

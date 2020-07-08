@@ -5,28 +5,23 @@ import com.sekhar.student.manager.department.impl.FileBasedDepartmentManagerImpl
 import com.sekhar.student.manager.department.impl.InMemoryBasedDepartmentManagerImpl;
 
 public class DepartmentManagerFactory {
-	private static DepartmentManager departmentmanager;
+	private static DepartmentManager departmentManager;
 
 	public static DepartmentManager getDepartmentManagerInstance(String persistence) {
 
-		if (persistence == "IN_MEMORY") {
+		if (persistence.equalsIgnoreCase("IN_MEMORY")) {
 
-			departmentmanager = new InMemoryBasedDepartmentManagerImpl();
+			departmentManager = new InMemoryBasedDepartmentManagerImpl();
 
-		} else if (persistence == "DB") {
+		} else if (persistence.equalsIgnoreCase("DB")) {
 
-			departmentmanager = new DBBasedDepartmentManagerImpl();
+			departmentManager = new DBBasedDepartmentManagerImpl();
 
+		} else if (persistence.equalsIgnoreCase("FILE")) {
+			departmentManager = new FileBasedDepartmentManagerImpl();
 		}
-
-		return departmentmanager;
-
-	}
-
-	public static DepartmentManager getDepartmentManagerInstance(String persistence, String path, String filename) {
-
-		departmentmanager = new FileBasedDepartmentManagerImpl(path, filename);
-		return departmentmanager;
+		return departmentManager;
 
 	}
+
 }

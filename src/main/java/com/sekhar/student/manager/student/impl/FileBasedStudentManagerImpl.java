@@ -6,33 +6,33 @@ import com.sekhar.student.dao.student.FileBasedStudentDao;
 import com.sekhar.student.dao.student.impl.FileBasedStudentDaoImpl;
 
 public class FileBasedStudentManagerImpl implements StudentManager {
-	FileBasedStudentDao studentdao;
+	private FileBasedStudentDao studentDao;
 
-	public FileBasedStudentManagerImpl(String path, String filename)
+	public FileBasedStudentManagerImpl()
 
 	{
-		studentdao = new FileBasedStudentDaoImpl(path, filename);
+		studentDao = new FileBasedStudentDaoImpl();
 	}
 
 	public void addStudent(Student student) {
-		studentdao.addStudent(student);
+		studentDao.addStudent(student);
 	}
 
 	public void removeStudent(int id) {
-		studentdao.deleteStudent(id);
+		studentDao.deleteStudent(id);
 
 	}
 
 	public Student getStudent(int id) {
 
 		Student student;
-		student = studentdao.getStudent(id);
+		student = studentDao.getStudent(id);
 		return student;
 	}
 
 	public Student[] getStudents() {
 		Student[] students = new Student[100];
-		students = studentdao.getStudents();
+		students = studentDao.getStudents();
 		return students;
 	}
 

@@ -8,108 +8,47 @@ import com.sekhar.student.model.Department;
 
 public class DepartmentTest {
 
-	Scanner sc = new Scanner(System.in);
-	StudentTest studenttest;
-	DepartmentService service;
+	private Scanner scanner = new Scanner(System.in);
 
-	public static void main(String a[])
+	private DepartmentService departmentService;
+
+	public static void main(String args[])
 
 	{
 
-		StudentTest studenttest = new StudentTest();
-
-		studenttest.persistenceChoose();
+		DepartmentTest departmentTest = new DepartmentTest();
+		String persistence = departmentTest.choosePeristance();
+		departmentTest.doOperations(persistence);
 	}
 
-	public void persistenceChoose() {
+	public String choosePeristance() {
 
 		System.out.println("Enter Where To Store Data");
-		String persistence = sc.next();
+		String persistence = scanner.next();
 
-		if (persistence == "IN_MEMORY") {
-			service = new DepartmentServiceImpl(persistence);
+		if (persistence.equalsIgnoreCase("IN_MEMORY")) {
+			departmentService = new DepartmentServiceImpl(persistence);
 
-			studenttest.InMemory();
 
-		} else if (persistence == "DB") {
-			service = new DepartmentServiceImpl(persistence);
-			studenttest.Db();
-		} else if (persistence == "FILE") {
-			System.out.println("Enter File Path");
-			String path = sc.next();
-			System.out.println("Enter File Name");
-			String filename = sc.next();
-			service = new DepartmentServiceImpl(persistence, path, filename);
 
-			studenttest.File();
+		} else if (persistence.equalsIgnoreCase("DB")) {
+			departmentService = new DepartmentServiceImpl(persistence);
+			
+		} else if (persistence.equalsIgnoreCase("FILE")) {
+
+			departmentService = new DepartmentServiceImpl(persistence);
+
 		}
 
 		else {
 			System.out.println("Entered Invaild Persistence");
 
 		}
+		return persistence;
 
 	}
 
-	public void File() {
-		System.out.println("Enter Your Choice");
-
-		int choice;
-
-		do {
-
-			System.out.println("Enter 1 To Add Department");
-			System.out.println("Enter 2 To Remove Department");
-
-			System.out.println("Enter 3 To Dispaly Department");
-			System.out.println("Enter 4 To Display Departments");
-			System.out.println("Enter 0 to Exist");
-
-			choice = sc.nextInt();
-
-			switch (choice) {
-
-			case 0:
-				System.exit(1);
-
-			case 1:
-				Department department = new Department();
-				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
-				department.setDepartmentId(departmentId);
-				System.out.println("Enter Department Name");
-				String departmentName = sc.next();
-				department.setDepartmentName(departmentName);
-				System.out.println("Enter Courses");
-				String courses[] = new String[3];
-				courses[0] = sc.next();
-				courses[1] = sc.next();
-				courses[3] = sc.next();
-				department.setCourses(courses);
-				service.addDepartment(department);
-				break;
-			case 2:
-				System.out.println("Enter Department Id");
-				departmentId = sc.nextInt();
-				service.removeDepartment(departmentId);
-				break;
-			case 3:
-				System.out.println("Enter Department ID");
-				departmentId = sc.nextInt();
-				service.getDepartment(departmentId);
-				break;
-			case 4:
-				service.getDepartments();
-				break;
-			default:
-				System.out.println("Enterd Invalid Option");
-			}
-
-		} while (true);
-
-	}
-
-	public void Db() {
+	public void doOperations(String persistence) {
 		System.out.println("Enter Your Choice");
 
 		int choice;
@@ -121,9 +60,9 @@ public class DepartmentTest {
 			System.out.println("Enter 3 To Update Department");
 			System.out.println("Enter 4 To Display Department");
 			System.out.println("Enter 5 To Display Departments");
-			System.out.println("Enter 0 to Exist");
+			System.out.println("Enter 0 to Exit");
 
-			choice = sc.nextInt();
+			choice = scanner.nextInt();
 
 			switch (choice) {
 
@@ -133,49 +72,54 @@ public class DepartmentTest {
 			case 1:
 				Department department = new Department();
 				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
+				int departmentId = scanner.nextInt();
 				department.setDepartmentId(departmentId);
 				System.out.println("Enter Department Name");
-				String departmentName = sc.next();
+				String departmentName = scanner.next();
 				department.setDepartmentName(departmentName);
 				System.out.println("Enter Courses");
 				String courses[] = new String[3];
-				courses[0] = sc.next();
-				courses[1] = sc.next();
-				courses[3] = sc.next();
+				courses[0] = scanner.next();
+				courses[1] = scanner.next();
+				courses[2] = scanner.next();
 				department.setCourses(courses);
-				service.addDepartment(department);
+				departmentService.addDepartment(department);
 				break;
 			case 2:
 				System.out.println("Enter Department Id");
-				departmentId = sc.nextInt();
-				service.removeDepartment(departmentId);
+				departmentId = scanner.nextInt();
+				departmentService.removeDepartment(departmentId);
 				break;
 
 			case 3:
-				department = new Department();
-				System.out.println("Enter Department Id");
-				departmentId = sc.nextInt();
-				department.setDepartmentId(departmentId);
-				System.out.println("Enter Department Name");
-				departmentName = sc.next();
-				department.setDepartmentName(departmentName);
-				System.out.println("Enter Courses");
-				courses = new String[3];
-				courses[0] = sc.next();
-				courses[1] = sc.next();
-				courses[3] = sc.next();
-				department.setCourses(courses);
+				if (persistence.equalsIgnoreCase("DB")) {
+					department = new Department();
+					System.out.println("Enter Department Id");
+					departmentId = scanner.nextInt();
+					department.setDepartmentId(departmentId);
+					System.out.println("Enter Department Name");
+					departmentName = scanner.next();
+					department.setDepartmentName(departmentName);
+					System.out.println("Enter Courses");
+					courses = new String[3];
+					courses[0] = scanner.next();
+					courses[1] = scanner.next();
+					courses[3] = scanner.next();
+					department.setCourses(courses);
 
-				service.updateDepartment(department);
+					departmentService.updateDepartment(department);
+				} else {
+					System.out.println("This Opertation Is Not Supported");
+				}
+				break;
 
 			case 4:
 				System.out.println("Enter Department ID");
-				departmentId = sc.nextInt();
-				service.getDepartment(departmentId);
+				departmentId = scanner.nextInt();
+				departmentService.getDepartment(departmentId);
 				break;
 			case 5:
-				service.getDepartments();
+				departmentService.getDepartments();
 				break;
 			default:
 				System.out.println("Enterd Invalid Option");
@@ -185,61 +129,4 @@ public class DepartmentTest {
 
 	}
 
-	public void InMemory() {
-		System.out.println("Enter Your Choice");
-
-		int choice;
-
-		do {
-
-			System.out.println("Enter 1 To Add Department");
-			System.out.println("Enter 2 To Remove Department");
-
-			System.out.println("Enter 3 To Dispaly Department");
-			System.out.println("Enter 4 To Display Departments");
-			System.out.println("Enter 0 to Exist");
-
-			choice = sc.nextInt();
-
-			switch (choice) {
-
-			case 0:
-				System.exit(1);
-
-			case 1:
-				Department department = new Department();
-				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
-				department.setDepartmentId(departmentId);
-				System.out.println("Enter Department Name");
-				String departmentName = sc.next();
-				department.setDepartmentName(departmentName);
-				System.out.println("Enter Courses");
-				String courses[] = new String[3];
-				courses[0] = sc.next();
-				courses[1] = sc.next();
-				courses[3] = sc.next();
-				department.setCourses(courses);
-				service.addDepartment(department);
-				break;
-			case 2:
-				System.out.println("Enter Department Id");
-				departmentId = sc.nextInt();
-				service.removeDepartment(departmentId);
-				break;
-			case 3:
-				System.out.println("Enter Department ID");
-				departmentId = sc.nextInt();
-				service.getDepartment(departmentId);
-				break;
-			case 4:
-				service.getDepartments();
-				break;
-			default:
-				System.out.println("Enterd Invalid Option");
-			}
-
-		} while (true);
-
-	}
 }

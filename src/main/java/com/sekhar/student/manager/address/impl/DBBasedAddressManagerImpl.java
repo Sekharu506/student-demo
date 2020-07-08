@@ -7,28 +7,27 @@ import com.sekhar.student.model.*;
 
 public class DBBasedAddressManagerImpl implements AddressManager {
 
-	private DBBasedAddressDao addressdao;
+	private DBBasedAddressDao addressDao;
 
 	public DBBasedAddressManagerImpl() {
-		addressdao = new DBBasedAddressDaoImpl();
+		addressDao = new DBBasedAddressDaoImpl();
 
 	}
 
 	public void addAddress(Address address) {
 
-		addressdao.insertAddress(address);
-		System.out.println("Address Added");
+		addressDao.insertAddress(address);
 
 	}
 
 	public void removeAddress(int doorNo) {
-		addressdao.deleteAddress(doorNo);
+		addressDao.deleteAddress(doorNo);
 
 	}
 
 	public Address getAddress(int doorNo) {
 
-		Address address = addressdao.getAddress(doorNo);
+		Address address = addressDao.getAddress(doorNo);
 
 		return address;
 
@@ -37,13 +36,13 @@ public class DBBasedAddressManagerImpl implements AddressManager {
 	public Address[] getAddresses()
 
 	{
-		Address[] addresses = addressdao.getAddresses();
+		Address[] addresses = addressDao.getAddresses();
 
 		return addresses;
 	}
 
 	public void updateAddress(Address address) {
-		addressdao.updateAddress(address);
+		addressDao.updateAddress(address);
 
 	}
 }

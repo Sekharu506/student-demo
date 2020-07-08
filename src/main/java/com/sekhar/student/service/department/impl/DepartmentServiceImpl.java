@@ -6,39 +6,33 @@ import com.sekhar.student.manager.department.DepartmentManagerFactory;
 import com.sekhar.student.model.Department;
 
 public class DepartmentServiceImpl implements DepartmentService {
-	DepartmentManager departmentmanager;
+	private DepartmentManager departmentManager;
 
 	public DepartmentServiceImpl(String persistence) {
 
-		departmentmanager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence);
-
-	}
-
-	public DepartmentServiceImpl(String persistence, String path, String filename) {
-
-		departmentmanager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence, path, filename);
+		departmentManager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence);
 
 	}
 
 	public void addDepartment(Department department) {
 
-		departmentmanager.addDepartment(department);
+		departmentManager.addDepartment(department);
 
 	}
 
 	public void removeDepartment(int departmentId) {
-		departmentmanager.removeDepartment(departmentId);
+		departmentManager.removeDepartment(departmentId);
 
 	}
 
 	public void updateDepartment(Department department) {
-		departmentmanager.updateDepartment(department);
+		departmentManager.updateDepartment(department);
 
 	}
 
 	public void getDepartment(int departmentId) {
 		Department department;
-		department = departmentmanager.getDepartment(departmentId);
+		department = departmentManager.getDepartment(departmentId);
 
 		if (department != null) {
 			System.out.println("  DepartmentId  DepartmentName Course1 Course2 Course3");
@@ -53,7 +47,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	public void getDepartments() {
 		Department[] departments;
-		departments = departmentmanager.getDepartments();
+		departments = departmentManager.getDepartments();
 		if (departments != null) {
 			System.out.println("  DepartmentId  DepartmentName Course1 Course2 Course3");
 			for (int i = 0; i < departments.length; i++) {

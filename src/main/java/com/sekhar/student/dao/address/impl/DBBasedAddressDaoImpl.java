@@ -11,20 +11,21 @@ import com.sekhar.student.dao.address.DBBasedAddressDao;
 public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_URL = "jdbc:mysql://localhost/demo";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/demo";
 	private static final String USER = "root";
-	private static final String PASS = "root123";
-	private Connection connection = null;
+	private static final String PASS = "";
+	private Connection connection;
 
 	public DBBasedAddressDaoImpl() {
 
 		try {
 			Class.forName(JDBC_DRIVER);
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("Class Not Found Exception,Registered Failed");
 		}
 		try {
-			connection = DriverManager.getConnection(DB_URL, USER, PASS);
+			this.connection = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (SQLException e) {
 			System.out.println("SQL Exception,Not return getConnection ");
 		}
@@ -75,12 +76,14 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	public void updateAddress(Address address) {
 
 		try {
+
 			PreparedStatement statement = connection
-					.prepareStatement("update address set doorNo=?,street=?,city=?,pin=? where doorNo=?;");
-			statement.setInt(1, address.getDno());
-			statement.setString(2, address.getStreet());
-			statement.setString(3, address.getCity());
-			statement.setInt(4, address.getPin());
+					.prepareStatement("update address set street=?,city=?,pin=? where doorNo=?;");
+
+			statement.setString(1, address.getStreet());
+			statement.setString(2, address.getCity());
+			statement.setInt(3, address.getPin());
+			statement.setInt(4, address.getDno());
 			int rows = statement.executeUpdate();
 			if (rows != 0) {
 				System.out.println(" " + rows + " Updated");
@@ -91,7 +94,8 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("SQL Exception ,statement not created");
+			System.out.println("SQL Exception ,statement not created  " + e.getMessage());
+
 		}
 	}
 
@@ -128,18 +132,21 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 		Address[] addresses;
 
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from address;");
+			PreparedStatement statement = connection.prepareStatement("select * from address;",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet resultset = statement.executeQuery();
 			int count;
 			if (resultset != null) {
 				resultset.last();
 				count = resultset.getRow();
+				System.out.println(count);
 				resultset.beforeFirst();
+
 				addresses = new Address[count];
 
 				int i = 0;
 				while (resultset.next()) {
-
+					addresses[i] = new Address();
 					addresses[i].setDno(resultset.getInt(1));
 					addresses[i].setStreet(resultset.getString("street"));
 					addresses[i].setCity(resultset.getString("city"));
@@ -155,7 +162,8 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("SQL Exception ,statement not created");
+			System.out.println("SQL Exception ,statement not created " + e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 

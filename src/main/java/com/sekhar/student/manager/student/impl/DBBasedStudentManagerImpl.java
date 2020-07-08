@@ -6,39 +6,39 @@ import com.sekhar.student.dao.student.DBBasedStudentDao;
 import com.sekhar.student.dao.student.impl.DBBasedStudentDaoImpl;
 
 public class DBBasedStudentManagerImpl implements StudentManager {
-	DBBasedStudentDao studentdao;
+	private DBBasedStudentDao studentDao;
 
 	public DBBasedStudentManagerImpl() {
-		studentdao = new DBBasedStudentDaoImpl();
+		studentDao = new DBBasedStudentDaoImpl();
 	}
 
 	public void addStudent(Student student) {
-		studentdao.insertStudent(student);
+		studentDao.insertStudent(student);
 
 	}
 
 	public void updateStudent(Student student)
 
 	{
-		studentdao.updateStudent(student);
+		studentDao.updateStudent(student);
 	}
 
 	public void removeStudent(int id) {
-		studentdao.deleteStudent(id);
+		studentDao.deleteStudent(id);
 
 	}
 
 	public Student getStudent(int id) {
 		Student student;
 
-		student = studentdao.getStudent(id);
+		student = studentDao.getStudent(id);
 		return student;
 	}
 
 	public Student[] getStudents() {
 		Student[] students = new Student[100];
 
-		students = studentdao.getStudents();
+		students = studentDao.getStudents();
 		return students;
 
 	}

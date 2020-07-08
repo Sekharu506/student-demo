@@ -16,9 +16,9 @@ public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
 	private String path;
 	private String filename;
 
-	public FileBasedAddressDaoImpl(String path, String filename) {
-		this.path = path;
-		this.filename = filename;
+	public FileBasedAddressDaoImpl() {
+		this.path = "/home/cultuzz/";
+		this.filename = "test.txt";
 		file = createFileObject(filename);
 
 	}

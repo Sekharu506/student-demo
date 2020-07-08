@@ -7,41 +7,37 @@ import java.util.Scanner;
 
 public class StudentTest {
 
-	Scanner sc = new Scanner(System.in);
-	StudentTest studenttest;
-	StudentService service;
+	private Scanner scanner = new Scanner(System.in);
 
-	public static void main(String a[])
+	private StudentService studentService;
+
+	public static void main(String args[])
 
 	{
 
-		StudentTest studenttest = new StudentTest();
+		StudentTest studentTest = new StudentTest();
 
-		studenttest.persistenceChoose();
+		studentTest.persistenceChoose();
 	}
 
 	public void persistenceChoose() {
 
 		System.out.println("Enter Where To Store Data");
-		String persistence = sc.next();
+		String persistence = scanner.next();
 
-		if (persistence == "IN_MEMORY") {
-			service = new StudentServiceImpl(persistence);
+		if (persistence.equalsIgnoreCase("IN_MEMORY")) {
+			studentService = new StudentServiceImpl(persistence);
+			doOperations(persistence);
 
-			studenttest.InMemory();
+		} else if (persistence.equalsIgnoreCase("DB")) {
+			studentService = new StudentServiceImpl(persistence);
+			doOperations(persistence);
 
-		} else if (persistence == "DB") {
-			service = new StudentServiceImpl(persistence);
-			studenttest.Db();
-		} else if (persistence == "FILE") {
+		} else if (persistence.equalsIgnoreCase("FILE")) {
 
-			System.out.println("Enter File Path");
-			String path = sc.next();
-			System.out.println("Enter File Name");
-			String filename = sc.next();
-			service = new StudentServiceImpl(persistence, path, filename);
+			studentService = new StudentServiceImpl(persistence);
+			doOperations(persistence);
 
-			studenttest.File();
 		}
 
 		else {
@@ -51,69 +47,7 @@ public class StudentTest {
 
 	}
 
-	public void File() {
-
-		System.out.println("Enter Your Choice");
-		int choice;
-		do
-
-		{
-
-			System.out.println("Enter 1 To Add Student");
-			System.out.println("Enter 2 To Remove Student");
-
-			System.out.println("Enter 3 To Display Student");
-			System.out.println("Enter 4 To Display Students");
-			System.out.println("Enter 0 To Exist");
-
-			;
-			choice = sc.nextInt();
-			switch (choice) {
-			case 0:
-				System.exit(1);
-
-			case 1:
-				Student student = new Student();
-				System.out.println("Enter Student id");
-				int id = sc.nextInt();
-				student.setId(id);
-				System.out.println("Enter Name");
-				String name = sc.next();
-				student.setName(name);
-				System.out.println("Enter Phone Number");
-				long phone = sc.nextLong();
-				student.setPhone(phone);
-				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
-				student.setDepartmentId(departmentId);
-				System.out.println("Enter Door No");
-				int doorNo = sc.nextInt();
-				student.setDno(doorNo);
-				service.addStudent(student);
-				break;
-			case 2:
-				System.out.println("Enter Student Id");
-				id = sc.nextInt();
-				service.removeStudent(id);
-				break;
-			case 3:
-				System.out.println("Enter Student id");
-				id = sc.nextInt();
-				service.getStudent(id);
-				break;
-			case 4:
-				service.getStudents();
-				break;
-			default:
-				System.out.println("Choose Correct Option");
-
-			}
-
-		} while (true);
-
-	}
-
-	public void Db() {
+	public void doOperations(String persistence) {
 
 		System.out.println("Enter Your Choice");
 		int choice;
@@ -124,8 +58,9 @@ public class StudentTest {
 			System.out.println("Enter 3  To Update Student");
 			System.out.println("Enter 4 To Display Student");
 			System.out.println("Enter 5 To Display Students");
-			System.out.println("Enter 0 To Exist");
-			choice = sc.nextInt();
+			System.out.println("Enter 6 To sort Students");
+			System.out.println("Enter 0 To Exit");
+			choice = scanner.nextInt();
 			switch (choice)
 
 			{
@@ -136,115 +71,66 @@ public class StudentTest {
 			case 1:
 				Student student = new Student();
 				System.out.println("Enter Student id");
-				int id = sc.nextInt();
+				int id = scanner.nextInt();
 				student.setId(id);
 				System.out.println("Enter Name");
-				String name = sc.next();
+				String name = scanner.next();
 				student.setName(name);
 				System.out.println("Enter Phone Number");
-				long phone = sc.nextLong();
+				long phone = scanner.nextLong();
 				student.setPhone(phone);
 				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
+				int departmentId = scanner.nextInt();
 				student.setDepartmentId(departmentId);
 				System.out.println("Enter Door No");
-				int doorNo = sc.nextInt();
+				int doorNo = scanner.nextInt();
 				student.setDno(doorNo);
-				service.addStudent(student);
+
+				studentService.addStudent(student);
 				break;
 			case 2:
 				System.out.println("Enter Student Id");
-				id = sc.nextInt();
-				service.removeStudent(id);
+				id = scanner.nextInt();
+				studentService.removeStudent(id);
 				break;
 			case 3:
-				student = new Student();
-				System.out.println("Enter Student id");
-				id = sc.nextInt();
-				student.setId(id);
-				System.out.println("Enter Name");
-				name = sc.next();
-				student.setName(name);
-				System.out.println("Enter Phone Number");
-				phone = sc.nextLong();
-				student.setPhone(phone);
-				System.out.println("Enter Department Id");
-				departmentId = sc.nextInt();
-				student.setDepartmentId(departmentId);
-				System.out.println("Enter Door No");
-				doorNo = sc.nextInt();
-				student.setDno(doorNo);
-				service.updateStudent(student);
+				if (persistence.equalsIgnoreCase("DB")) {
+					student = new Student();
+					System.out.println("Enter Student id");
+					id = scanner.nextInt();
+					student.setId(id);
+					System.out.println("Enter Name");
+					name = scanner.next();
+					student.setName(name);
+					System.out.println("Enter Phone Number");
+					phone = scanner.nextLong();
+					student.setPhone(phone);
+					System.out.println("Enter Department Id");
+					departmentId = scanner.nextInt();
+					student.setDepartmentId(departmentId);
+					System.out.println("Enter Door No");
+					doorNo = scanner.nextInt();
+					student.setDno(doorNo);
+					studentService.updateStudent(student);
+				} else {
+					System.out.println("This Operation is not Supported");
+				}
 				break;
 
 			case 4:
 				System.out.println("Enter Student id");
-				id = sc.nextInt();
-				service.getStudent(id);
+				id = scanner.nextInt();
+				studentService.getStudent(id);
 				break;
 			case 5:
-				service.getStudents();
+				studentService.getStudents();
 				break;
-			default:
-				System.out.println("Choose Correct Option");
-
-			}
-
-		} while (true);
-
-	}
-
-	public void InMemory() {
-		System.out.println("Enter Your Choice");
-		int choice;
-
-		do {
-			System.out.println("Enter 1 To Add Student");
-			System.out.println("Enter 2 To Remove Student");
-
-			System.out.println("Enter 3 To Display Student");
-			System.out.println("Enter 4 To Display Students");
-			System.out.println("Enter 0 To Exist");
-			choice = sc.nextInt();
-			switch (choice)
-
-			{
-
-			case 0:
-				System.exit(1);
-
-			case 1:
-				Student student = new Student();
-				System.out.println("Enter Student id");
-				int id = sc.nextInt();
-				student.setId(id);
-				System.out.println("Enter Name");
-				String name = sc.next();
-				student.setName(name);
-				System.out.println("Enter Phone Number");
-				long phone = sc.nextLong();
-				student.setPhone(phone);
-				System.out.println("Enter Department Id");
-				int departmentId = sc.nextInt();
-				student.setDepartmentId(departmentId);
-				System.out.println("Enter Door No");
-				int doorNo = sc.nextInt();
-				student.setDno(doorNo);
-				service.addStudent(student);
-				break;
-			case 2:
-				System.out.println("Enter Student Id");
-				id = sc.nextInt();
-				service.removeStudent(id);
-				break;
-
-			case 3:
-				System.out.println("Enter Student id");
-				id = sc.nextInt();
-				service.getStudent(id);
-				break;
-			case 4:
-				service.getStudents();
+			case 6:
+				if (persistence.equalsIgnoreCase("IN_MEMORY")) {
+					studentService.sort();
+				} else {
+					System.out.println("This Operation is Not Supported");
+				}
 				break;
 			default:
 				System.out.println("Choose Correct Option");

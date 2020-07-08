@@ -8,7 +8,7 @@ import com.sekhar.student.dao.address.InMemoryBasedAddressDao;
 import com.sekhar.student.model.Address;
 
 public class InMemoryBasedAddressDaoImpl implements InMemoryBasedAddressDao {
-	Set<Address> addresses;
+	private Set<Address> addresses;
 
 	public InMemoryBasedAddressDaoImpl() {
 		addresses = new HashSet<Address>();

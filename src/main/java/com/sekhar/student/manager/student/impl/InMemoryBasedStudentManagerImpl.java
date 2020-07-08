@@ -9,31 +9,31 @@ import java.util.Set;
 
 public class InMemoryBasedStudentManagerImpl implements StudentManager {
 
-	InMemoryBasedStudentDao studentdao = null;
+	private InMemoryBasedStudentDao studentDao = null;
 
 	public InMemoryBasedStudentManagerImpl() {
 
-		studentdao = new InMemoryBasedStudentDaoImpl();
+		studentDao = new InMemoryBasedStudentDaoImpl();
 
 	}
 
 	public void addStudent(Student student) {
-		studentdao.addStudent(student);
+		studentDao.addStudent(student);
 
 	}
 
 	public void removeStudent(int id) {
-		studentdao.deleteStudent(id);
+		studentDao.deleteStudent(id);
 
 	}
 
 	public Student getStudent(int id) {
-		Student student = studentdao.getStudent(id);
+		Student student = studentDao.getStudent(id);
 		return student;
 	}
 
 	public Student[] getStudents() {
-		Set<Student> students = studentdao.getStudents();
+		Set<Student> students = studentDao.getStudents();
 		int size = students.size();
 		Student[] studentarray = new Student[size];
 		students.toArray(studentarray);
@@ -43,7 +43,7 @@ public class InMemoryBasedStudentManagerImpl implements StudentManager {
 
 	public Student[] sortStudents() {
 
-		List<Student> studentlist = studentdao.sortStudentsById();
+		List<Student> studentlist = studentDao.sortStudentsById();
 		int size = studentlist.size();
 		Student[] students = new Student[size];
 

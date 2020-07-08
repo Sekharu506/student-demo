@@ -6,43 +6,39 @@ import com.sekhar.student.manager.student.StudentManager;
 import com.sekhar.student.manager.student.StudentManagerFactory;
 
 public class StudentServiceImpl implements StudentService {
-	StudentManager studentmanager;
+
+	private StudentManager studentManager;
 
 	public StudentServiceImpl(String persistence) {
 
-		studentmanager = StudentManagerFactory.getStudentManagerInstance(persistence);
-
-	}
-
-	public StudentServiceImpl(String persistence, String path, String filename) {
-
-		studentmanager = StudentManagerFactory.getStudentManagerInstance(persistence, path, filename);
+		studentManager = StudentManagerFactory.getStudentManagerInstance(persistence);
 
 	}
 
 	public void updateStudent(Student student) {
-		studentmanager.updateStudent(student);
+		studentManager.updateStudent(student);
 
 	}
 
 	public void addStudent(Student student) {
 
-		studentmanager.addStudent(student);
+		studentManager.addStudent(student);
 
 	}
 
 	public void removeStudent(int id) {
 
-		studentmanager.removeStudent(id);
+		studentManager.removeStudent(id);
 
 	}
 
 	public void getStudent(int id) {
 		Student student;
-		student = studentmanager.getStudent(id);
+		student = studentManager.getStudent(id);
 		if (student != null) {
 			System.out.println(" Id     Name    Phone");
-			student.toString();
+			System.out.println(student.toString());
+
 		} else {
 
 			System.out.println("Student Not Found");
@@ -53,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
 	public void getStudents() {
 
 		Student[] students;
-		students = studentmanager.getStudents();
+		students = studentManager.getStudents();
 		if (students != null) {
 			System.out.println(" Id     Name    Phone");
 			for (int i = 0; i < students.length; i++) {
@@ -66,9 +62,9 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	public void sort() {
-		Student[] students = studentmanager.sortStudents();
+		Student[] students = studentManager.sortStudents();
 		for (int i = 0; i < students.length; i++) {
-			students[i].toString();
+			System.out.println(students[i].toString());
 		}
 	}
 }

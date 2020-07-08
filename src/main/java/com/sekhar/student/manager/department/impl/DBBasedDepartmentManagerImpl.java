@@ -7,39 +7,39 @@ import com.sekhar.student.dao.department.impl.DBBasedDepartmentDaoImpl;
 
 public class DBBasedDepartmentManagerImpl implements DepartmentManager {
 
-	DBBasedDepartmentDao departmentdao;
+	private DBBasedDepartmentDao departmentDao;
 
 	public DBBasedDepartmentManagerImpl()
 
 	{
-		departmentdao = new DBBasedDepartmentDaoImpl();
+		departmentDao = new DBBasedDepartmentDaoImpl();
 	}
 
 	public void addDepartment(Department department) {
 
-		departmentdao.insertDepartment(department);
+		departmentDao.insertDepartment(department);
 	}
 
 	public void removeDepartment(int departmentId) {
 
-		departmentdao.deleteDepartment(departmentId);
+		departmentDao.deleteDepartment(departmentId);
 	}
 
 	public void updateDepartment(Department department) {
-		departmentdao.updateDepartment(department);
+		departmentDao.updateDepartment(department);
 
 	}
 
 	public Department getDepartment(int departmentId) {
 
 		Department department;
-		department = departmentdao.getDepartment(departmentId);
+		department = departmentDao.getDepartment(departmentId);
 		return department;
 	}
 
 	public Department[] getDepartments() {
 		Department[] departments = new Department[100];
-		departments = getDepartments();
+		departments = departmentDao.getDepartments();
 		return departments;
 	}
 

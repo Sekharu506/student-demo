@@ -9,28 +9,28 @@ import java.util.Set;
 
 public class InMemoryBasedAddressManagerImpl implements AddressManager {
 
-	private InMemoryBasedAddressDao addressdao = null;
+	private InMemoryBasedAddressDao addressDao = null;
 
 	public InMemoryBasedAddressManagerImpl() {
-		addressdao = new InMemoryBasedAddressDaoImpl();
+		addressDao = new InMemoryBasedAddressDaoImpl();
 		// if some thing true then addressdao = new
 	}
 
 	public void addAddress(Address address) {
 
-		addressdao.addAddress(address);
+		addressDao.addAddress(address);
 		System.out.println("Address Added");
 
 	}
 
 	public void removeAddress(int doorNo) {
-		addressdao.deleteAddress(doorNo);
+		addressDao.deleteAddress(doorNo);
 
 	}
 
 	public Address getAddress(int doorNo) {
 
-		Address address = addressdao.getAddress(doorNo);
+		Address address = addressDao.getAddress(doorNo);
 
 		return address;
 
@@ -39,7 +39,7 @@ public class InMemoryBasedAddressManagerImpl implements AddressManager {
 	public Address[] getAddresses()
 
 	{
-		Set<Address> addresses = addressdao.getAddresses();
+		Set<Address> addresses = addressDao.getAddresses();
 		int size = addresses.size();
 		Address[] addressarray = new Address[size];
 		addresses.toArray(addressarray);

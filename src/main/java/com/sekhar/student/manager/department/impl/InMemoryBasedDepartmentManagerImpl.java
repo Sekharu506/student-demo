@@ -8,29 +8,29 @@ import java.util.Set;
 
 public class InMemoryBasedDepartmentManagerImpl implements DepartmentManager {
 
-	InMemoryBasedDepartmentDao departmentdao = null;
+	private InMemoryBasedDepartmentDao departmentDao = null;
 
 	public InMemoryBasedDepartmentManagerImpl() {
-		departmentdao = new InMemoryBasedDepartmentDaoImpl();
+		departmentDao = new InMemoryBasedDepartmentDaoImpl();
 
 	}
 
 	public void addDepartment(Department department) {
-		departmentdao.addDepartment(department);
+		departmentDao.addDepartment(department);
 
 	}
 
 	public void removeDepartment(int departmentId) {
-		departmentdao.deleteDepartment(departmentId);
+		departmentDao.deleteDepartment(departmentId);
 	}
 
 	public Department getDepartment(int departmentId) {
-		Department department = departmentdao.getDepartment(departmentId);
+		Department department = departmentDao.getDepartment(departmentId);
 		return department;
 	}
 
 	public Department[] getDepartments() {
-		Set<Department> departments = departmentdao.getDepartments();
+		Set<Department> departments = departmentDao.getDepartments();
 		int size = departments.size();
 		Department departmentarray[] = new Department[size];
 		departments.toArray(departmentarray);

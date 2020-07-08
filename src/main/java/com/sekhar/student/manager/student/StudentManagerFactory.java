@@ -4,25 +4,22 @@ import com.sekhar.student.manager.student.impl.*;
 
 public class StudentManagerFactory {
 
-	private static StudentManager studentmanager;
+	private static StudentManager studentManager;
 
 	public static StudentManager getStudentManagerInstance(String persistence) {
 
-		if (persistence == "IN_MEMORY") {
-			studentmanager = new InMemoryBasedStudentManagerImpl();
+		if (persistence.equalsIgnoreCase("IN_MEMORY")) {
+			studentManager = new InMemoryBasedStudentManagerImpl();
 
-		} else if (persistence == "DB") {
-			studentmanager = new DBBasedStudentManagerImpl();
+		} else if (persistence.equalsIgnoreCase("DB")) {
+			studentManager = new DBBasedStudentManagerImpl();
 
 		}
-		return studentmanager;
 
-	}
-
-	public static StudentManager getStudentManagerInstance(String persistence, String path, String filename) {
-
-		studentmanager = new FileBasedStudentManagerImpl(path, filename);
-		return studentmanager;
+		else if (persistence.equalsIgnoreCase("FILE")) {
+			studentManager = new FileBasedStudentManagerImpl();
+		}
+		return studentManager;
 
 	}
 

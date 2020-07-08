@@ -6,37 +6,29 @@ import com.sekhar.student.manager.address.AddressManagerFactory;
 import com.sekhar.student.model.Address;
 
 public class AddressServiceImpl implements AddressService {
-	AddressManager addressmanager;
+	private AddressManager addressManager;
 
 	public AddressServiceImpl(String persistence) {
-		addressmanager = AddressManagerFactory.getAddresssManagerInstance(persistence);
-
-	}
-
-	public AddressServiceImpl(String persistence, String path, String filename) {
-		addressmanager = AddressManagerFactory.getAddressManagerInstance(persistence, path, filename);
+		addressManager = AddressManagerFactory.getAddresssManagerInstance(persistence);
 
 	}
 
 	public void addAddress(Address address) {
 
-		addressmanager.addAddress(address);
+		addressManager.addAddress(address);
 
 	}
 
 	public void removeAddress(int doorNo) {
-		addressmanager.removeAddress(doorNo);
+		addressManager.removeAddress(doorNo);
 
 	}
 
 	public void getAddress(int doorNo) {
 		Address address;
-		address = addressmanager.getAddress(doorNo);
-		if (address == null) {
+		address = addressManager.getAddress(doorNo);
+		if (address != null) {
 			System.out.println(" DoorNo    Street    City   PinCode");
-			System.out.println("No Address Found");
-
-		} else {
 			System.out.println(" " + address.toString());
 
 		}
@@ -45,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
 	public void getAddresses() {
 
 		Address[] addresses;
-		addresses = addressmanager.getAddresses();
+		addresses = addressManager.getAddresses();
 		if (addresses != null)
 
 		{
@@ -54,14 +46,12 @@ public class AddressServiceImpl implements AddressService {
 				System.out.println("  " + addresses[i].toString());
 			}
 
-		} else {
-			System.out.println("No Address Data Found");
 		}
 
 	}
 
 	public void updateAddress(Address address) {
-		addressmanager.updateAddress(address);
+		addressManager.updateAddress(address);
 
 	}
 
