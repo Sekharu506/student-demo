@@ -1,27 +1,18 @@
 package com.sekhar.student.dao.department.impl;
 
+import com.sekhar.student.dao.department.FileBasedDepartmentDao;
 import com.sekhar.student.model.Department;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import com.sekhar.student.dao.department.FileBasedDepartmentDao;
+import java.io.*;
 
 public class FileBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
-	private File file;
+	private File files[];
 	private String path;
-	private String filename;
+	private int fileObjectPointer = -1;
 
 	public FileBasedDepartmentDaoImpl() {
-		this.path = "home/cultuzz/";
-		this.filename = "test.txt";
-		file = createFileObject(filename);
-
+		this.path = "/home/cultuzz/sekhar-demo-files/departments/";
+		files = new File[100];
 	}
 
 	public File createFileObject(String filename) {
@@ -49,66 +40,59 @@ public class FileBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
 	}
 
 	public void addDepartment(Department department) {
-		if (file.exists()) {
+		fileObjectPointer++;
+		String filename = "Department" + fileObjectPointer + ".ser";
+		files[fileObjectPointer] = createFileObject(filename);
+		if (files[fileObjectPointer].exists()) {
 			try {
-				FileOutputStream fout = new FileOutputStream(file);
+				FileOutputStream fileOutputPointer = new FileOutputStream(files[fileObjectPointer]);
 
 				try {
 
-					ObjectOutputStream fileobject = new ObjectOutputStream(fout);
+					ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputPointer);
 
-					fileobject.writeObject(department);
+					objectOutputStream.writeObject(department);
 					System.out.println(" " + department.getDepartmentId() + " Added");
 
-					fileobject.close();
+					objectOutputStream.close();
 				} catch (IOException e) {
 					System.out.println("IO Exception");
 				}
-			} catch (FileNotFoundException e)
-
-			{
+			} catch (FileNotFoundException e) {
 				System.out.println("File Not Found Exception");
 			}
-		} else {
-			System.out.println("File Not Exists");
-		}
 
+
+		}
 	}
 
 	public void deleteDepartment(int departmentId) {
-		File file2;
-		file2 = createFileObject("temp.txt");
-		if (file.exists() && file2.exists()) {
-			Department department;
+		File[] files2;
+		int tempPointer = 0;
+		int foundAtIndex = -1;
+		Department department = new Department();
+		do {
+
+
 			try {
-				FileInputStream fin = new FileInputStream(file);
-				FileOutputStream fout = new FileOutputStream(file2);
+				FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
 				try {
-					ObjectInputStream fileobjectin = new ObjectInputStream(fin);
-					ObjectOutputStream fileobjectout = new ObjectOutputStream(fout);
+					ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-					do {
-						try {
 
-							department = (Department) fileobjectin.readObject();
+					try {
 
-							if (department.getDepartmentId() == departmentId) {
-								continue;
-							} else {
-								fileobjectout.writeObject(department);
-							}
-						}
+						department = (Department) objectInputStream.readObject();
 
-						catch (ClassNotFoundException e) {
+						if (departmentId == department.getDepartmentId()) {
+							foundAtIndex = tempPointer;
 							break;
 						}
 
-					} while (true);
-					fileobjectin.close();
-					fileobjectout.close();
-					file.delete();
-					file = new File(path + filename);
-					file2.renameTo(file);
+					} catch (ClassNotFoundException e) {
+						System.out.println("Class Not Found Exception" + e.getMessage());
+					}
+
 
 					System.out.println("Student Deleted");
 
@@ -120,100 +104,118 @@ public class FileBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
 			} catch (FileNotFoundException e) {
 				System.out.println("File Not Found Exception");
 			}
+			tempPointer++;
+		} while (tempPointer <= fileObjectPointer);
 
+		if (foundAtIndex != -1) {
+			int size = fileObjectPointer + 1;
+			files2 = new File[size];
+			int j = 0;
+			for (int i = 0; i <= fileObjectPointer; i++) {
+				if (i == foundAtIndex) {
+					continue;
+				}
+
+				files2[j] = files[i];
+				j++;
+			}
+			files = files2;
+			fileObjectPointer--;
+			System.out.println(" " + department.getDepartmentId());
 		} else {
-			System.out.println("Files not Exist");
+
+			System.out.println("Not Found");
 		}
 
 	}
 
 	public Department getDepartment(int departmentId) {
+		Department department = null;
+		if (fileObjectPointer != -1) {
+			int tempPointer = 0;
+			do {
 
-		if (file.exists()) {
-			Department department;
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
 				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
+					FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
+					try {
+						ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-					do {
 						try {
-							department = (Department) fileobject.readObject();
+							department = (Department) objectInputStream.readObject();
 
 							if (department.getDepartmentId() == departmentId) {
 								return department;
 
 							}
-
+						} catch (ClassNotFoundException e) {
+							System.out.println("Class not Found Exception  " + e.getMessage());
 						}
+					} catch (IOException e) {
+						System.out.println("IO Exception " + e.getMessage());
 
-						catch (ClassNotFoundException e) {
-							fileobject.close();
-							System.out.println("Class Not Found Exception");
-							return null;
-						}
+					}
 
-					} while (true);
+
+				} catch (FileNotFoundException e) {
+					System.out.println("FILE Not Found Exception  " + e.getMessage());
 
 				}
 
-				catch (IOException e) {
-					System.out.println("IO Exception");
-					return null;
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
-
+			} while (tempPointer <= fileObjectPointer);
 		} else {
+			System.out.println("Emply list");
 			return null;
 		}
-
+		return department;
 	}
 
 	public Department[] getDepartments() {
 
-		if (file.exists()) {
-			Department[] departments = new Department[100];
+		if (fileObjectPointer != -1) {
+			int count = fileObjectPointer;
+			count++;
+			int tempPointer = 0;
+			Department[] departments = new Department[count];
+			int arrayIndex = 0;
+			do {
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
 
 				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
-					int i = 0;
-					do {
+					FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
+
+					try {
+						ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
 						try {
-							departments[i] = (Department) fileobject.readObject();
+							departments[arrayIndex] = (Department) objectInputStream.readObject();
 
-							i++;
-
+							arrayIndex++;
+							tempPointer++;
 						} catch (ClassNotFoundException e) {
-							fileobject.close();
 							System.out.println("Class Not Found Exception,No More Student");
-							break;
 						}
 
-					} while (true);
-					fileobject.close();
-					return departments;
 
-				}
+						return departments;
 
-				catch (IOException e) {
-					System.out.println("IO Exception");
-					e.printStackTrace();
+					} catch (IOException e) {
+						System.out.println("IO Exception");
+						e.printStackTrace();
 
+						return null;
+					}
+				} catch (FileNotFoundException e) {
+					System.out.println("File Not Found Exception");
 					return null;
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
 
+				}
+
+
+			} while (tempPointer <= fileObjectPointer);
 		} else {
+
+			System.out.println("Emply LIst");
 			return null;
 		}
 

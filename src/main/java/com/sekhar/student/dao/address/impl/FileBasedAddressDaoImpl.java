@@ -1,221 +1,241 @@
 package com.sekhar.student.dao.address.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.sekhar.student.dao.address.FileBasedAddressDao;
 import com.sekhar.student.model.Address;
 
-import com.sekhar.student.dao.address.FileBasedAddressDao;
+import java.io.*;
 
 public class FileBasedAddressDaoImpl implements FileBasedAddressDao {
-	private File file;
-	private String path;
-	private String filename;
+    private File[] files;
+    private File[] files2;
+    private int fileObjectPointer = -1;
+    private final String path;
 
-	public FileBasedAddressDaoImpl() {
-		this.path = "/home/cultuzz/";
-		this.filename = "test.txt";
-		file = createFileObject(filename);
 
-	}
+    public FileBasedAddressDaoImpl() {
+        this.path = "/home/cultuzz/student-demo-file/addresses/";
 
-	public File createFileObject(String filename) {
+        files = new File[100];
 
-		File tempfile = new File(path + filename);
-		boolean isCreated = false;
-		tempfile = new File(path + filename);
-		try {
-			isCreated = tempfile.createNewFile();
+    }
 
-			if (isCreated) {
-				System.out.println(tempfile.getName() + " File Created");
+    public File createFileObject(String filename) {
 
-			}
+        File tempFile = new File(path + filename);
+        boolean isCreated = false;
+        try {
+            isCreated = tempFile.createNewFile();
 
-			else {
-				System.out.println("File Already Created");
+            if (isCreated) {
+                System.out.println(tempFile.getName() + " File Created");
 
-			}
-		} catch (IOException e) {
-			System.out.println("Exception Thrown While Creating FIle");
+            } else {
+                System.out.println("File Already Created");
 
-		}
-		return tempfile;
-	}
+            }
+        } catch (IOException e) {
+            System.out.println("Exception Thrown While Creating FIle");
 
-	public void addAddress(Address address) {
-		if (file.exists()) {
-			try {
-				FileOutputStream fout = new FileOutputStream(file);
+        }
+        return tempFile;
+    }
 
-				try {
+    public void addAddress(Address address) {
 
-					ObjectOutputStream fileobject = new ObjectOutputStream(fout);
+        fileObjectPointer++;
 
-					fileobject.writeObject(address);
-					System.out.println(" " + address.getDno() + " Added");
+        String filename = "Address" + fileObjectPointer + ".ser";
+        files[fileObjectPointer] = createFileObject(filename);
+        if (files[fileObjectPointer].exists()) {
+            try {
 
-					fileobject.close();
-				} catch (IOException e) {
-					System.out.println("IO Exception");
-				}
-			} catch (FileNotFoundException e)
 
-			{
-				System.out.println("File Not Found Exception");
-			}
-		} else {
-			System.out.println("File Not Exists");
-		}
+                FileOutputStream fileOutputStream = new FileOutputStream(files[fileObjectPointer]);
 
-	}
+                try {
 
-	public void deleteAddress(int doorNo) {
-		File file2;
-		file2 = createFileObject("temp.txt");
-		if (file.exists() && file2.exists()) {
-			Address address;
-			try {
-				FileInputStream fin = new FileInputStream(file);
-				FileOutputStream fout = new FileOutputStream(file2);
-				try {
-					ObjectInputStream fileobjectin = new ObjectInputStream(fin);
-					ObjectOutputStream fileobjectout = new ObjectOutputStream(fout);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-					do {
-						try {
+                    objectOutputStream.writeObject(address);
+                    System.out.println(" " + address.getDno() + " Added");
 
-							address = (Address) fileobjectin.readObject();
+                    objectOutputStream.close();
+                } catch (IOException e) {
+                    System.out.println("IO Exception");
+                }
 
-							if (address.getDno() == doorNo) {
-								continue;
-							} else {
-								fileobjectout.writeObject(address);
-							}
-						}
+            } catch (FileNotFoundException e) {
+                System.out.println("File Not Found Exception");
+            }
+        } else {
+            System.out.println("File Doesnt Exists");
+        }
 
-						catch (ClassNotFoundException e) {
-							break;
-						}
+    }
 
-					} while (true);
-					fileobjectin.close();
-					fileobjectout.close();
-					file.delete();
-					file = new File(path + filename);
-					file2.renameTo(file);
+    public void deleteAddress(int doorNo) {
 
-					System.out.println("Student Deleted");
+        int foundAtIndex = -1;
 
-				} catch (IOException e) {
-					System.out.println("IO Exception");
-					e.printStackTrace();
-				}
+        int count = 0;
+        Address address;
 
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-			}
+        if (fileObjectPointer > -1) {
 
-		} else {
-			System.out.println("Files not Exist");
-		}
 
-	}
+            do {
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(files[count]);
+                    try {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-	public Address getAddress(int doorNO) {
 
-		if (file.exists()) {
-			Address address;
+                        try {
+                            address = (Address) objectInputStream.readObject();
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
-				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
+                            if (address.getDno() == doorNo) {
 
-					do {
-						try {
-							address = (Address) fileobject.readObject();
+                                foundAtIndex = count;
+                                break;
+                            }
 
-							if (address.getDno() == doorNO) {
-								return address;
+                        } catch (ClassNotFoundException e) {
+                            System.out.println("Class Not Found Exception" + e.getMessage());
+                        }
 
-							}
 
-						}
+                        System.out.println("Student Deleted");
 
-						catch (ClassNotFoundException e) {
-							fileobject.close();
-							System.out.println("Class Not Found Exception");
-							return null;
-						}
+                    } catch (IOException e) {
+                        System.out.println("IO Exception");
+                        e.printStackTrace();
+                    }
 
-					} while (true);
+                } catch (FileNotFoundException e) {
+                    System.out.println("File Not Found Exception");
+                }
+            } while (count <= fileObjectPointer);
 
-				}
+            if (foundAtIndex == -1) {
+                System.out.println("Object Not Found");
+            } else {
+                int fileSize = fileObjectPointer;
+                fileSize++;
+                files2 = new File[fileSize];
+                int arrayIndex = 0;
+                for (int i = 0; i <= fileSize; i++) {
 
-				catch (IOException e) {
-					System.out.println("IO Exception");
-					return null;
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
+                    if (i == foundAtIndex) {
+                        continue;
+                    }
+                    files2[arrayIndex] = files[i];
+                    arrayIndex++;
+                }
+                files = files2;
+                fileObjectPointer--;
+                System.out.println("Removed");
+            }
+        } else {
+            System.out.println("NO Address list");
+        }
 
-		} else {
-			return null;
-		}
+    }
 
-	}
 
-	public Address[] getAddresses() {
+    public Address getAddress(int doorNO) {
+        if (fileObjectPointer != -1) {
+            int count = 0;
 
-		if (file.exists()) {
-			Address[] addresses = new Address[100];
+            Address address = new Address();
+            do {
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
 
-				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
-					int i = 0;
-					do {
-						try {
-							addresses[i] = (Address) fileobject.readObject();
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(files[count]);
+                    try {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-							i++;
 
-						} catch (ClassNotFoundException e) {
-							fileobject.close();
-							System.out.println("Class Not Found Exception,No More Student");
-							break;
-						}
+                        try {
+                            address = (Address) objectInputStream.readObject();
 
-					} while (true);
-					fileobject.close();
-					return addresses;
+                            if (address.getDno() == doorNO) {
 
-				}
 
-				catch (IOException e) {
-					System.out.println("IO Exception");
-					e.printStackTrace();
+                            }
 
-					return null;
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
+                        } catch (ClassNotFoundException e) {
+                            objectInputStream.close();
+                            System.out.println("Class Not Found Exception");
 
-		} else {
-			return null;
-		}
+                        }
 
-	}
 
+                    } catch (IOException e) {
+                        System.out.println("IO Exception");
+
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("File Not Found Exception");
+
+
+                }
+                return address;
+            } while (count <= fileObjectPointer);
+        } else {
+            System.out.println("Empty Addresses");
+            return null;
+        }
+    }
+
+    public Address[] getAddresses() {
+        Address[] addresses = null;
+        if (fileObjectPointer != -1) {
+
+            int count = 0;
+            int i = 0;
+            addresses = new Address[fileObjectPointer];
+            do {
+
+
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(files[count]);
+
+                    try {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+
+                        try {
+
+                            addresses[i] = (Address) objectInputStream.readObject();
+
+
+                        } catch (ClassNotFoundException e) {
+                            System.out.println("Class Not Found Exception,No More Student");
+                        }
+
+
+                    } catch (IOException e) {
+                        System.out.println("IO Exception");
+
+                    }
+
+
+                } catch (FileNotFoundException e) {
+                    System.out.println("File Not Found Exception");
+                    return null;
+                }
+                count++;
+                i++;
+            } while (count <= fileObjectPointer);
+            return addresses;
+
+        } else {
+            System.out.println("NO Addresses");
+        }
+        return addresses;
+    }
 }
+
+
+

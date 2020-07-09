@@ -25,6 +25,7 @@ public class StudentTest {
 		System.out.println("Enter Where To Store Data");
 		String persistence = scanner.next();
 
+
 		if (persistence.equalsIgnoreCase("IN_MEMORY")) {
 			studentService = new StudentServiceImpl(persistence);
 			doOperations(persistence);

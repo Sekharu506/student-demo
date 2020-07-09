@@ -1,27 +1,20 @@
 package com.sekhar.student.dao.student.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import com.sekhar.student.model.*;
-
 import com.sekhar.student.dao.student.FileBasedStudentDao;
+import com.sekhar.student.model.Student;
+
+import java.io.*;
 
 public class FileBasedStudentDaoImpl implements FileBasedStudentDao {
 
-	private File file;
+	private File files[] = new File[100];
 	private String path;
 	private String filename;
+	private int fileObjectPointer = -1;
 
 	public FileBasedStudentDaoImpl() {
-		this.path = "home/cultuzz/";
-		this.filename = "test.txt";
-		file = createFileObject(filename);
+		this.path = "/home/cultuzz/student-demo-files/students/";
+
 
 	}
 
@@ -50,76 +43,91 @@ public class FileBasedStudentDaoImpl implements FileBasedStudentDao {
 	}
 
 	public void addStudent(Student student) {
-		if (file.exists()) {
+		fileObjectPointer++;
+		try {
+			int index = fileObjectPointer;
+			index++;
+
+			String filename = "Student" + index + ".ser";
+			files[fileObjectPointer] = createFileObject(filename);
+
+			FileOutputStream fileOutputStream = new FileOutputStream(files[fileObjectPointer]);
+
 			try {
-				FileOutputStream fout = new FileOutputStream(file);
 
-				try {
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-					ObjectOutputStream fileobject = new ObjectOutputStream(fout);
+				objectOutputStream.writeObject(student);
+				System.out.println(" " + student.getName() + " Added");
 
-					fileobject.writeObject(student);
-					System.out.println(" " + student.getName() + " Added");
-
-					fileobject.close();
-				} catch (IOException e) {
-					System.out.println("IO Exception");
-				}
+				fileOutputStream.close();
+			} catch (IOException e) {
+				System.out.println("IO Exception");
+			}
 			} catch (FileNotFoundException e)
 
 			{
 				System.out.println("File Not Found Exception");
 			}
-		} else {
-			System.out.println("File Not Exists");
-		}
+
 
 	}
 
 	public void deleteStudent(int id) {
-		File file2;
-		file2 = createFileObject("temp.txt");
-		if (file.exists() && file2.exists()) {
+		File[] files2;
+		if (fileObjectPointer != -1) {
 			Student student;
-			try {
-				FileInputStream fin = new FileInputStream(file);
-				FileOutputStream fout = new FileOutputStream(file2);
-				try {
-					ObjectInputStream fileobjectin = new ObjectInputStream(fin);
-					ObjectOutputStream fileobjectout = new ObjectOutputStream(fout);
+			int count = fileObjectPointer;
+			count++;
+			int foundAtIndex = -1;
+			files2 = new File[count];
 
-					do {
+			int tempPointer = 0;
+			do {
+
+
+				try {
+					FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
+					try {
+						ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+
 						try {
 
-							student = (Student) fileobjectin.readObject();
+							student = (Student) objectInputStream.readObject();
 
 							if (student.getId() == id) {
-								continue;
-							} else {
-								fileobjectout.writeObject(student);
+
+								foundAtIndex = tempPointer;
+								break;
 							}
+						} catch (ClassNotFoundException e) {
+							System.out.println("Class Not Found Exception  " + e.getMessage());
 						}
 
-						catch (ClassNotFoundException e) {
-							break;
-						}
-
-					} while (true);
-					fileobjectin.close();
-					fileobjectout.close();
-					file.delete();
-					file = new File(path + filename);
-					file2.renameTo(file);
-
-					System.out.println("Student Deleted");
-
-				} catch (IOException e) {
-					System.out.println("IO Exception");
-					e.printStackTrace();
+					} catch (IOException e) {
+						System.out.println("IO Exception");
+						e.printStackTrace();
+					}
+				} catch (FileNotFoundException e) {
+					System.out.println("File Not Found Exception");
 				}
 
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
+			} while (tempPointer <= fileObjectPointer);
+
+			if (foundAtIndex != -1) {
+				int arrayIndex = 0;
+				for (int i = 0; i < fileObjectPointer; i++) {
+					if (i == foundAtIndex) {
+						continue;
+					}
+					files2[arrayIndex] = files[i];
+					arrayIndex++;
+				}
+				files = files2;
+				System.out.println("Object Deleted");
+			} else {
+				System.out.println("Student Not Found");
 			}
 
 		} else {
@@ -129,92 +137,96 @@ public class FileBasedStudentDaoImpl implements FileBasedStudentDao {
 	}
 
 	public Student getStudent(int id) {
+		Student student;
+		if (fileObjectPointer != -1) {
 
-		if (file.exists()) {
-			Student student;
+			int tempPointer = 0;
+			do {
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
 				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
+					FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
+					try {
+						ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-					do {
+
 						try {
-							student = (Student) fileobject.readObject();
+							student = (Student) objectInputStream.readObject();
 
 							if (student.getId() == id) {
 								return student;
 
 							}
 
-						}
+						} catch (ClassNotFoundException e) {
 
-						catch (ClassNotFoundException e) {
-							fileobject.close();
 							System.out.println("Class Not Found Exception");
 							return null;
 						}
 
-					} while (true);
 
-				}
-
-				catch (IOException e) {
-					System.out.println("IO Exception");
+					} catch (IOException e) {
+						System.out.println("IO Exception");
+						return null;
+					}
+				} catch (FileNotFoundException e) {
+					System.out.println("File Not Found Exception");
 					return null;
 				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
+			} while (tempPointer <= fileObjectPointer);
 
 		} else {
+
 			return null;
 		}
-
+		return student;
 	}
 
 	public Student[] getStudents() {
 
-		if (file.exists()) {
-			Student[] students = new Student[100];
+		if (fileObjectPointer != -1) {
+			int count = fileObjectPointer;
+			count++;
+			int tempPointer = 0;
 
-			try {
-				FileInputStream fin = new FileInputStream(file);
+			Student[] students = new Student[count];
+			int arrayIndex = 0;
+			do {
+
 
 				try {
-					ObjectInputStream fileobject = new ObjectInputStream(fin);
-					int i = 0;
-					do {
-						try {
-							students[i] = (Student) fileobject.readObject();
+					FileInputStream fileInputStream = new FileInputStream(files[tempPointer]);
 
-							i++;
+					try {
+						ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+
+						try {
+							students[arrayIndex] = (Student) objectInputStream.readObject();
+
 
 						} catch (ClassNotFoundException e) {
-							fileobject.close();
 							System.out.println("Class Not Found Exception,No More Student");
 							break;
 						}
 
-					} while (true);
-					fileobject.close();
-					return students;
 
-				}
+					} catch (IOException e) {
+						System.out.println("IO Exception");
+						e.printStackTrace();
 
-				catch (IOException e) {
-					System.out.println("IO Exception");
-					e.printStackTrace();
-
+						return null;
+					}
+				} catch (FileNotFoundException e) {
+					System.out.println("File Not Found Exception");
 					return null;
 				}
-			} catch (FileNotFoundException e) {
-				System.out.println("File Not Found Exception");
-				return null;
-			}
-
+				arrayIndex++;
+				tempPointer++;
+			} while (tempPointer <= fileObjectPointer);
+			return students;
 		} else {
+
+
 			return null;
 		}
 
