@@ -1,14 +1,9 @@
 package com.sekhar.student.dao.student.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import com.sekhar.student.dao.student.DBBasedStudentDao;
 import com.sekhar.student.model.Student;
 
-import com.sekhar.student.dao.student.DBBasedStudentDao;
+import java.sql.*;
 
 public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
 
@@ -104,7 +99,7 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
                 return student;
 
             } else {
-                System.out.println(" Student Not Found");
+                
                 return null;
             }
 

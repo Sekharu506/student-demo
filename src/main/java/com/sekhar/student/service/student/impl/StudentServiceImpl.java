@@ -1,9 +1,9 @@
 package com.sekhar.student.service.student.impl;
 
-import com.sekhar.student.model.Student;
-import com.sekhar.student.service.student.StudentService;
 import com.sekhar.student.manager.student.StudentManager;
 import com.sekhar.student.manager.student.StudentManagerFactory;
+import com.sekhar.student.model.Student;
+import com.sekhar.student.service.student.StudentService;
 
 public class StudentServiceImpl implements StudentService {
 
@@ -39,10 +39,8 @@ public class StudentServiceImpl implements StudentService {
 			System.out.println(" Id     Name    Phone");
 			System.out.println(student.toString());
 
-		} else {
-
-			System.out.println("Student Not Found");
 		}
+
 
 	}
 
@@ -55,9 +53,8 @@ public class StudentServiceImpl implements StudentService {
 			for (int i = 0; i < students.length; i++) {
 				System.out.println(" " + students[i].toString());
 			}
-		} else {
-			System.out.println("Not Student in Records");
 		}
+
 
 	}
 

@@ -1,17 +1,15 @@
 package com.sekhar.student.manager.address.impl;
 
+import com.sekhar.student.dao.address.FileCsvBasedAddressDao;
+import com.sekhar.student.dao.address.impl.FileCsvBasedAddressDaoImpl;
 import com.sekhar.student.manager.address.AddressManager;
 import com.sekhar.student.model.Address;
-import com.sekhar.student.dao.address.FileBasedAddressDao;
-import com.sekhar.student.dao.address.impl.FileBasedAddressDaoImpl;
 
 public class FileBasedAddressManagerImpl implements AddressManager {
-	private FileBasedAddressDao addressDao;
+	private FileCsvBasedAddressDao addressDao;
 
-	public FileBasedAddressManagerImpl()
-
-	{
-		addressDao = new FileBasedAddressDaoImpl();
+	public FileBasedAddressManagerImpl() {
+		addressDao = new FileCsvBasedAddressDaoImpl();
 
 	}
 
