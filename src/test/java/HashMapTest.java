@@ -1,3 +1,5 @@
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.HashMap;
 
@@ -26,14 +28,17 @@ public class HashMapTest {
 
         System.out.println("Frequency Of Characters In Your Name " + name);
 
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-            System.out.println(c + "=" + hashMap.get(c));
-
+        Iterator<Map.Entry<Character, Integer>> iterator = hashMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Character, Integer> set = (Map.Entry<Character, Integer>) iterator.next();
+            System.out.println(set.getKey() + " = " + set.getValue());
         }
-
-
     }
 
-
 }
+
+
+
+
+
+
