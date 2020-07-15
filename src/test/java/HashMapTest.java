@@ -21,6 +21,7 @@ public class HashMapTest {
 
             } else {
                 hashMap.put(c, 1);
+
             }
 
 

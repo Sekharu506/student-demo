@@ -7,9 +7,9 @@ import java.io.*;
 
 public class FileCsvBasedAddressDaoImpl implements FileCsvBasedAddressDao {
 
-    File file;
+    private File file;
     private String path;
-    File file2;
+    private File file2;
 
     public FileCsvBasedAddressDaoImpl() {
 

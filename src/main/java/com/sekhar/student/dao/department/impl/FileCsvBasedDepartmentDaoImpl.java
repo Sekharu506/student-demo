@@ -6,9 +6,9 @@ import com.sekhar.student.model.Department;
 import java.io.*;
 
 public class FileCsvBasedDepartmentDaoImpl implements FileCsvBasedDepartmentDao {
-    File file;
+    private File file;
     private String path;
-    File file2;
+    private File file2;
 
     public FileCsvBasedDepartmentDaoImpl() {
 

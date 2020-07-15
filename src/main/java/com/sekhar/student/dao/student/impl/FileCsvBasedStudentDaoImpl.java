@@ -7,9 +7,9 @@ import java.io.*;
 
 
 public class FileCsvBasedStudentDaoImpl implements FileCsvBasedStudentDao {
-    File file;
+   private File file;
     private String path;
-    File file2;
+    private File file2;
 
     public FileCsvBasedStudentDaoImpl() {
 
