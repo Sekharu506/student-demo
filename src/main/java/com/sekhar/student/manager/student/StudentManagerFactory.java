@@ -16,11 +16,14 @@ public class StudentManagerFactory {
 
 		}
 
-		else if (persistence.equalsIgnoreCase("FILE")) {
-			studentManager = new FileBasedStudentManagerImpl();
-		}
+
 		return studentManager;
 
+	}
+
+	public static StudentManager getStudentManagerInstance(String persistence, String csvChoice) {
+		studentManager = new FileBasedStudentManagerImpl(csvChoice);
+		return studentManager;
 	}
 
 }

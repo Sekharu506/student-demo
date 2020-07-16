@@ -1,11 +1,11 @@
 package com.sekhar.student.dao.address.impl;
 
-import com.sekhar.student.dao.address.FileCsvBasedAddressDao;
+import com.sekhar.student.dao.address.FileBasedAddressDao;
 import com.sekhar.student.model.Address;
 
 import java.io.*;
 
-public class FileCsvBasedAddressDaoImpl implements FileCsvBasedAddressDao {
+public class FileCsvBasedAddressDaoImpl implements FileBasedAddressDao {
 
     private File file;
     private String path;

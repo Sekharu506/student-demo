@@ -1,10 +1,11 @@
 package com.sekhar.student.manager.address;
 
+import com.sekhar.student.dao.address.FileBasedAddressDaoFactory;
 import com.sekhar.student.manager.address.impl.*;
 
 public class AddressManagerFactory {
 
-	public static AddressManager getAddresssManagerInstance(String persistence) {
+	public static AddressManager getAddressManagerInstance(String persistence) {
 
 		AddressManager addressManager = null;
 
@@ -16,12 +17,16 @@ public class AddressManagerFactory {
 
 			addressManager = new DBBasedAddressManagerImpl();
 
-		} else if (persistence.equalsIgnoreCase("FILE")) {
-			addressManager = new FileBasedAddressManagerImpl();
 		}
 
 		return addressManager;
 
 	}
 
+	public static AddressManager getAddressManagerInstance(String peristence, String csvChoice) {
+		AddressManager addressManager;
+		addressManager = new FileBasedAddressManagerImpl(csvChoice);
+
+		return addressManager;
+	}
 }

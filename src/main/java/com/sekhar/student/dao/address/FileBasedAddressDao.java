@@ -2,7 +2,7 @@ package com.sekhar.student.dao.address;
 
 import com.sekhar.student.model.Address;
 
-public interface FileCsvBasedAddressDao {
+public interface FileBasedAddressDao {
 
     public void addAddress(Address address);
 

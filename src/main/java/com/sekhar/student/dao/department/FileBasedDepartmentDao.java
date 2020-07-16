@@ -2,7 +2,7 @@ package com.sekhar.student.dao.department;
 
 import com.sekhar.student.model.Department;
 
-public interface CSVLibBasedDepartmentDao {
+public interface FileBasedDepartmentDao {
 
 
     public void addDepartment(Department department);
@@ -12,4 +12,8 @@ public interface CSVLibBasedDepartmentDao {
     public Department getDepartment(int departmentId);
 
     public Department[] getDepartments();
+
+
 }
+
+

@@ -1,15 +1,22 @@
 package com.sekhar.student.service.address.impl;
 
+
 import com.sekhar.student.service.address.AddressService;
 import com.sekhar.student.manager.address.AddressManager;
 import com.sekhar.student.manager.address.AddressManagerFactory;
 import com.sekhar.student.model.Address;
 
+
 public class AddressServiceImpl implements AddressService {
 	private AddressManager addressManager;
 
 	public AddressServiceImpl(String persistence) {
-		addressManager = AddressManagerFactory.getAddresssManagerInstance(persistence);
+		addressManager = AddressManagerFactory.getAddressManagerInstance(persistence);
+
+	}
+
+	public AddressServiceImpl(String persistence, String csvChoice) {
+		addressManager = AddressManagerFactory.getAddressManagerInstance(persistence, csvChoice);
 
 	}
 

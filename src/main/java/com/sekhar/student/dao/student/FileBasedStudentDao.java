@@ -2,7 +2,7 @@ package com.sekhar.student.dao.student;
 
 import com.sekhar.student.model.Student;
 
-public interface FileCsvBasedStudentDao {
+public interface FileBasedStudentDao {
 
 
     public void addStudent(Student student);

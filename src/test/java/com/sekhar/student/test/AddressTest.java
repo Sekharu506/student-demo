@@ -33,8 +33,9 @@ public class AddressTest {
 			AddressService = new AddressServiceImpl(persistence);
 			doOperations(persistence);
 		} else if (persistence.equalsIgnoreCase("FILE")) {
-
-			AddressService = new AddressServiceImpl(persistence);
+			System.out.println("Enter CSV Choice");
+			String csvChoice = scanner.next();
+			AddressService = new AddressServiceImpl(persistence, csvChoice);
 			doOperations(persistence);
 
 		}

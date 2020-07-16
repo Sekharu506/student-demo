@@ -35,8 +35,9 @@ public class StudentTest {
 			doOperations(persistence);
 
 		} else if (persistence.equalsIgnoreCase("FILE")) {
-
-			studentService = new StudentServiceImpl(persistence);
+			System.out.println("Enter Csv Mode");
+			String csvChoice = scanner.next();
+			studentService = new StudentServiceImpl(persistence, csvChoice);
 			doOperations(persistence);
 
 		}

@@ -1,11 +1,11 @@
 package com.sekhar.student.dao.department.impl;
 
-import com.sekhar.student.dao.department.FileCsvBasedDepartmentDao;
+import com.sekhar.student.dao.department.FileBasedDepartmentDao;
 import com.sekhar.student.model.Department;
 
 import java.io.*;
 
-public class FileCsvBasedDepartmentDaoImpl implements FileCsvBasedDepartmentDao {
+public class FileCsvBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
     private File file;
     private String path;
     private File file2;

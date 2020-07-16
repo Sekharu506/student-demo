@@ -1,15 +1,16 @@
 package com.sekhar.student.manager.department.impl;
 
-import com.sekhar.student.dao.department.FileCsvBasedDepartmentDao;
+import com.sekhar.student.dao.department.FileBasedDepartmentDao;
+import com.sekhar.student.dao.department.FileBasedDepartmentDaoFactory;
 import com.sekhar.student.dao.department.impl.FileCsvBasedDepartmentDaoImpl;
 import com.sekhar.student.manager.department.DepartmentManager;
 import com.sekhar.student.model.Department;
 
 public class FileBasedDepartmentManagerImpl implements DepartmentManager {
-	private FileCsvBasedDepartmentDao departmentDao;
+	private FileBasedDepartmentDao departmentDao;
 
-	public FileBasedDepartmentManagerImpl() {
-		departmentDao = new FileCsvBasedDepartmentDaoImpl();
+	public FileBasedDepartmentManagerImpl(String csvChoice) {
+		departmentDao = FileBasedDepartmentDaoFactory.getInstanceOfDepartmentDao(csvChoice);
 	}
 
 	public void addDepartment(Department department) {

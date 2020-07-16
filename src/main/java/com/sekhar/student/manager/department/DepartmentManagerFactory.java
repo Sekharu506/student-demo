@@ -17,9 +17,13 @@ public class DepartmentManagerFactory {
 
 			departmentManager = new DBBasedDepartmentManagerImpl();
 
-		} else if (persistence.equalsIgnoreCase("FILE")) {
-			departmentManager = new FileBasedDepartmentManagerImpl();
 		}
+		return departmentManager;
+
+	}
+
+	public static DepartmentManager getDepartmentManagerInstance(String persistence, String csvChoice) {
+		departmentManager = new FileBasedDepartmentManagerImpl(csvChoice);
 		return departmentManager;
 
 	}

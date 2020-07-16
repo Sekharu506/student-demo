@@ -15,6 +15,12 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
+	public StudentServiceImpl(String persistence, String csvChoice) {
+
+		studentManager = StudentManagerFactory.getStudentManagerInstance(persistence, csvChoice);
+
+	}
+
 	public void updateStudent(Student student) {
 		studentManager.updateStudent(student);
 

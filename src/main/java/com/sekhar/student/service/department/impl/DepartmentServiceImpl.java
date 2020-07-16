@@ -14,6 +14,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	}
 
+	public DepartmentServiceImpl(String persistence, String csvChoice) {
+
+		departmentManager = DepartmentManagerFactory.getDepartmentManagerInstance(persistence, csvChoice);
+
+	}
+
 	public void addDepartment(Department department) {
 
 		departmentManager.addDepartment(department);

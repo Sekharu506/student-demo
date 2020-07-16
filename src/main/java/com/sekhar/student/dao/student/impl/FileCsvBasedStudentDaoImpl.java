@@ -1,12 +1,12 @@
 package com.sekhar.student.dao.student.impl;
 
-import com.sekhar.student.dao.student.FileCsvBasedStudentDao;
+import com.sekhar.student.dao.student.FileBasedStudentDao;
 import com.sekhar.student.model.Student;
 
 import java.io.*;
 
 
-public class FileCsvBasedStudentDaoImpl implements FileCsvBasedStudentDao {
+public class FileCsvBasedStudentDaoImpl implements FileBasedStudentDao {
    private File file;
     private String path;
     private File file2;

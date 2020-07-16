@@ -1,27 +1,28 @@
-package com.sekhar.student.dao.address.impl;
-
-import com.opencsv.CSVWriter;
-import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
-import com.sekhar.student.dao.address.FileBasedAddressDao;
-import com.sekhar.student.model.Address;
-
-import java.io.*;
-import java.util.*;
+package com.sekhar.student.dao.department.impl;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
+import com.sekhar.student.dao.department.FileBasedDepartmentDao;
+import com.sekhar.student.model.Address;
+import com.sekhar.student.model.Department;
 
-public class CSVLibBasedAddressDaoImpl implements FileBasedAddressDao {
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CSVLibBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
+
 
     private File file;
     private String path;
     private File file2;
 
-    public CSVLibBasedAddressDaoImpl() {
+    public CSVLibBasedDepartmentDaoImpl() {
 
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
-        file = createFileObject("Addresses.csv");
+        file = createFileObject("Departments.csv");
         file2 = new File(path);
     }
 
@@ -42,50 +43,51 @@ public class CSVLibBasedAddressDaoImpl implements FileBasedAddressDao {
     }
 
 
-    public void addAddress(Address address) {
+    public void addDepartment(Department department) {
         try {
             FileWriter fileWriter = new FileWriter(file, true);
             CSVWriter csvWriter = new CSVWriter(fileWriter);
 
-            String[] addressArray = new String[4];
-            addressArray[0] = String.valueOf(address.getDno());
-            addressArray[1] = address.getStreet();
-            addressArray[2] = address.getCity();
-            addressArray[3] = String.valueOf(address.getPin());
+            String[] departmentArray = new String[5];
+            departmentArray[0] = String.valueOf(department.getDepartmentId());
+            departmentArray[1] = department.getDepartmentName();
+            String[] courses = department.getCourses();
+            departmentArray[2] = courses[0];
+            departmentArray[3] = courses[1];
+            departmentArray[4] = courses[2];
 
-            csvWriter.writeNext(addressArray);
+
+            csvWriter.writeNext(departmentArray);
             csvWriter.close();
-            System.out.println(address.getStreet() + " Added");
+            System.out.println(department.getDepartmentName() + " Added");
 
         } catch (IOException e) {
             System.out.println("IO Exception");
         }
 
-
     }
 
-    public void deleteAddress(int doorNo) {
-
+    public void deleteDepartment(int departmentId) {
         if (file.exists()) {
             int found = 0;
             file2 = createFileObject("temp.csv");
             try {
                 FileReader fileReader = new FileReader(file);
                 CSVReader csvReader = new CSVReader(fileReader);
-                String[] addressArray;
+                String[] departmentArray;
                 try {
-                    addressArray = csvReader.readNext();
-                    while (addressArray != null) {
-                        if (Integer.parseInt(addressArray[0]) == doorNo) {
-                            addressArray = csvReader.readNext();
+                    departmentArray = csvReader.readNext();
+                    while (departmentArray != null) {
+                        if (Integer.parseInt(departmentArray[0]) == departmentId) {
+                            departmentArray = csvReader.readNext();
                             found = 1;
                             continue;
                         } else {
                             FileWriter fileWriter = new FileWriter(file2, true);
                             CSVWriter csvWriter = new CSVWriter(fileWriter);
-                            csvWriter.writeNext(addressArray);
+                            csvWriter.writeNext(departmentArray);
                             csvWriter.close();
-                            addressArray = csvReader.readNext();
+                            departmentArray = csvReader.readNext();
                         }
                     }
                     if (found == 1) {
@@ -113,34 +115,38 @@ public class CSVLibBasedAddressDaoImpl implements FileBasedAddressDao {
             System.out.println("Address File Does'nt Exists");
         }
 
+
     }
 
 
-    public Address getAddress(int doorNo) {
+    public Department getDepartment(int departmentId) {
         if (file.exists()) {
             int found = 0;
-            Address address = new Address();
+            Department department = new Department();
             try {
                 FileReader fileReader = new FileReader(file);
                 CSVReader csvReader = new CSVReader(fileReader);
 
-                String[] addressArray;
+                String[] departmentArray;
                 try {
-                    addressArray = csvReader.readNext();
-                    while (addressArray != null) {
-                        if (Integer.parseInt(addressArray[0]) == doorNo) {
+                    departmentArray = csvReader.readNext();
+                    while (departmentArray != null) {
+                        if (Integer.parseInt(departmentArray[0]) == departmentId) {
                             found = 1;
                             break;
 
                         }
-                        addressArray = csvReader.readNext();
+                        departmentArray = csvReader.readNext();
                     }
                     if (found == 1) {
-                        address.setDno(doorNo);
-                        address.setStreet(addressArray[1]);
-                        address.setCity(addressArray[2]);
-                        address.setPin(Integer.parseInt(addressArray[3]));
-                        return address;
+                        department.setDepartmentId(Integer.parseInt(departmentArray[0]));
+                        department.setDepartmentName(departmentArray[1]);
+                        String courses[] = new String[3];
+                        courses[0] = departmentArray[2];
+                        courses[1] = departmentArray[3];
+                        courses[2] = departmentArray[4];
+                        department.setCourses(courses);
+                        return department;
                     } else {
 
                         System.out.println("Address Not Found");
@@ -164,34 +170,37 @@ public class CSVLibBasedAddressDaoImpl implements FileBasedAddressDao {
         }
     }
 
-    public Address[] getAddresses() {
+
+    public Department[] getDepartments() {
         if (file.exists()) {
 
             int rows = countRows();
-            Address[] addresses = new Address[rows];
+            System.out.println(rows);
+            Department[] departments = new Department[rows];
             try {
 
                 FileReader fileReader = new FileReader(file);
                 CSVReader csvReader = new CSVReader(fileReader);
 
 
-                String[] addressArray;
+                String[] departmentArray;
 
                 try {
-                    addressArray = csvReader.readNext();
+                    departmentArray = csvReader.readNext();
                     int i = 0;
-                    while (addressArray != null) {
-                        addresses[i] = new Address();
-
-                        addresses[i].setDno(Integer.parseInt(addressArray[0]));
-                        addresses[i].setStreet(addressArray[1]);
-                        addresses[i].setCity(addressArray[2]);
-                        addresses[i].setPin(Integer.parseInt(addressArray[3]));
-
-                        addressArray = csvReader.readNext();
+                    while (departmentArray != null) {
+                        departments[i] = new Department();
+                        departments[i].setDepartmentId(Integer.parseInt(departmentArray[0]));
+                        departments[i].setDepartmentName(departmentArray[1]);
+                        String courses[] = new String[3];
+                        courses[0] = departmentArray[2];
+                        courses[1] = departmentArray[3];
+                        courses[2] = departmentArray[4];
+                        departments[i].setCourses(courses);
+                        departmentArray = csvReader.readNext();
                         i++;
                     }
-                    return addresses;
+                    return departments;
                 } catch (IOException | CsvValidationException e) {
                     System.out.println("CSV Validation Exception");
                     return null;

@@ -1,15 +1,16 @@
 package com.sekhar.student.manager.student.impl;
 
-import com.sekhar.student.dao.student.FileCsvBasedStudentDao;
+import com.sekhar.student.dao.student.FileBasedStudentDao;
+import com.sekhar.student.dao.student.FileBasedStudentDaoFactory;
 import com.sekhar.student.dao.student.impl.FileCsvBasedStudentDaoImpl;
 import com.sekhar.student.manager.student.StudentManager;
 import com.sekhar.student.model.Student;
 
 public class FileBasedStudentManagerImpl implements StudentManager {
-	private FileCsvBasedStudentDao studentDao;
+	private FileBasedStudentDao studentDao;
 
-	public FileBasedStudentManagerImpl() {
-		studentDao = new FileCsvBasedStudentDaoImpl();
+	public FileBasedStudentManagerImpl(String csvChoice) {
+		studentDao = FileBasedStudentDaoFactory.getInstanceOfAddressDao(csvChoice);
 	}
 
 	public void addStudent(Student student) {

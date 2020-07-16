@@ -32,8 +32,10 @@ public class DepartmentTest {
             departmentService = new DepartmentServiceImpl(persistence);
             doOperations(persistence);
         } else if (persistence.equalsIgnoreCase("FILE")) {
+            System.out.println("Enter Csv Mode");
+            String csvChoice = scanner.next();
 
-            departmentService = new DepartmentServiceImpl(persistence);
+            departmentService = new DepartmentServiceImpl(persistence, csvChoice);
             doOperations(persistence);
         } else {
             System.out.println("Entered Invalid Persistence");
