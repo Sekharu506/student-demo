@@ -13,9 +13,16 @@ import com.sekhar.student.dao.student.InMemoryBasedStudentDao;
 
 public class InMemoryBasedStudentDaoImpl implements InMemoryBasedStudentDao {
 	private Set<Student> students;
+	private static InMemoryBasedStudentDaoImpl studentDao = null;
 
-	public InMemoryBasedStudentDaoImpl() {
+	private InMemoryBasedStudentDaoImpl() {
 		students = new HashSet<Student>();
+	}
+
+	public static InMemoryBasedStudentDaoImpl getStudentDaoInstance() {
+		if (studentDao == null)
+			studentDao = new InMemoryBasedStudentDaoImpl();
+		return studentDao;
 	}
 
 	public void addStudent(Student student) {

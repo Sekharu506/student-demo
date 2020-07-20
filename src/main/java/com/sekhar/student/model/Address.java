@@ -12,6 +12,7 @@ public class Address implements java.io.Serializable {
 	private String city;
 	private int pin;
 
+
 	public Address() {
 
 	}
@@ -24,6 +25,7 @@ public class Address implements java.io.Serializable {
 		this.pin = pin;
 
 	}
+
 
 	public void setDno(int doorNo) {
 		this.doorNo = doorNo;

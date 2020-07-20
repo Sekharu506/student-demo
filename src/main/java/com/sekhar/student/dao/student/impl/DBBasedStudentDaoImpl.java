@@ -12,8 +12,9 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
     private static final String USER = "root";
     private static final String PASS = "root123";
     private Connection connection = null;
+    private static DBBasedStudentDaoImpl studentDao = null;
 
-    public DBBasedStudentDaoImpl() {
+    private DBBasedStudentDaoImpl() {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -25,6 +26,12 @@ public class DBBasedStudentDaoImpl implements DBBasedStudentDao {
             System.out.println("SQL Exception,Not return getConnection ");
         }
 
+    }
+
+    public static DBBasedStudentDaoImpl getStudentDaoInstance() {
+        if (studentDao == null)
+            studentDao = new DBBasedStudentDaoImpl();
+        return studentDao;
     }
 
     public void insertStudent(Student student) {

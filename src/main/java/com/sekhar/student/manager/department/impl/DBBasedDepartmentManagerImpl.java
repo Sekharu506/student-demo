@@ -12,7 +12,7 @@ public class DBBasedDepartmentManagerImpl implements DepartmentManager {
 	public DBBasedDepartmentManagerImpl()
 
 	{
-		departmentDao = new DBBasedDepartmentDaoImpl();
+		departmentDao = DBBasedDepartmentDaoImpl.getDepartmentDaoInstance();
 	}
 
 	public void addDepartment(Department department) {

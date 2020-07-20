@@ -10,9 +10,9 @@ public class FileBasedStudentDaoFactory {
         FileBasedStudentDao studentDao = null;
 
         if (csvChoice.equalsIgnoreCase("csvLib")) {
-            studentDao = new CSVLibBasedStudentDaoImpl();
+            studentDao = CSVLibBasedStudentDaoImpl.getStudentDaoInstance();
         } else if (csvChoice.equalsIgnoreCase("csvNonLib")) {
-            studentDao = new FileCsvBasedStudentDaoImpl();
+            studentDao = FileCsvBasedStudentDaoImpl.getStudentDaoInstance();
         }
 
         return studentDao;

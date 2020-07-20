@@ -9,9 +9,17 @@ import com.sekhar.student.model.Address;
 
 public class InMemoryBasedAddressDaoImpl implements InMemoryBasedAddressDao {
 	private Set<Address> addresses;
+	private static InMemoryBasedAddressDaoImpl addressDao = null;
 
-	public InMemoryBasedAddressDaoImpl() {
+	private InMemoryBasedAddressDaoImpl() {
 		addresses = new HashSet<Address>();
+	}
+
+
+	public static InMemoryBasedAddressDaoImpl getAddressDaoInstance() {
+		if (addressDao == null)
+			addressDao = new InMemoryBasedAddressDaoImpl();
+		return addressDao;
 	}
 
 	public void addAddress(Address address) {

@@ -15,8 +15,9 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 	private static final String USER = "root";
 	private static final String PASS = "";
 	private Connection connection;
+	private static DBBasedAddressDaoImpl addressDao = null;
 
-	public DBBasedAddressDaoImpl() {
+	private DBBasedAddressDaoImpl() {
 
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -29,6 +30,13 @@ public class DBBasedAddressDaoImpl implements DBBasedAddressDao {
 		} catch (SQLException e) {
 			System.out.println("SQL Exception,Not return getConnection ");
 		}
+
+	}
+
+	public static DBBasedAddressDaoImpl getAddressDaoInstance() {
+		if (addressDao == null)
+			addressDao = new DBBasedAddressDaoImpl();
+		return addressDao;
 
 	}
 

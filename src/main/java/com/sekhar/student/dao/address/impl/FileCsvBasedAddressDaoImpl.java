@@ -10,13 +10,20 @@ public class FileCsvBasedAddressDaoImpl implements FileBasedAddressDao {
     private File file;
     private String path;
     private File file2;
+    private static FileCsvBasedAddressDaoImpl addressDao = null;
 
-    public FileCsvBasedAddressDaoImpl() {
+    private FileCsvBasedAddressDaoImpl() {
 
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
         file = createFileObject("Addresses.csv");
         file2 = new File(path);
+    }
+
+    public static FileCsvBasedAddressDaoImpl getAddressDaoInstance() {
+        if (addressDao == null)
+            addressDao = new FileCsvBasedAddressDaoImpl();
+        return addressDao;
     }
 
     public File createFileObject(String filename) {

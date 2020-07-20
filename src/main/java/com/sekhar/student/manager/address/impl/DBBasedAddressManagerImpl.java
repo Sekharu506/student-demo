@@ -10,7 +10,7 @@ public class DBBasedAddressManagerImpl implements AddressManager {
 	private DBBasedAddressDao addressDao;
 
 	public DBBasedAddressManagerImpl() {
-		addressDao = new DBBasedAddressDaoImpl();
+		addressDao = DBBasedAddressDaoImpl.getAddressDaoInstance();
 
 	}
 

@@ -16,8 +16,9 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
     private static final String USER = "root";
     private static final String PASS = "root123";
     private Connection connection = null;
+    private static DBBasedDepartmentDaoImpl departmentDao = null;
 
-    public DBBasedDepartmentDaoImpl() {
+    private DBBasedDepartmentDaoImpl() {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -29,6 +30,12 @@ public class DBBasedDepartmentDaoImpl implements DBBasedDepartmentDao {
             System.out.println("SQL Exception,Not return getConnection ");
         }
 
+    }
+
+    public static DBBasedDepartmentDaoImpl getDepartmentDaoInstance() {
+        if (departmentDao == null)
+            departmentDao = new DBBasedDepartmentDaoImpl();
+        return departmentDao;
     }
 
     public void insertDepartment(Department department) {

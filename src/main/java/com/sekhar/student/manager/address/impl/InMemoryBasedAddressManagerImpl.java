@@ -12,7 +12,7 @@ public class InMemoryBasedAddressManagerImpl implements AddressManager {
 	private InMemoryBasedAddressDao addressDao = null;
 
 	public InMemoryBasedAddressManagerImpl() {
-		addressDao = new InMemoryBasedAddressDaoImpl();
+		addressDao = InMemoryBasedAddressDaoImpl.getAddressDaoInstance();
 		// if some thing true then addressdao = new
 	}
 

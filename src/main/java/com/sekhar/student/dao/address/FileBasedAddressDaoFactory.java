@@ -10,9 +10,9 @@ public class FileBasedAddressDaoFactory {
         FileBasedAddressDao addressDao = null;
 
         if (csvChoice.equalsIgnoreCase("csvLib")) {
-            addressDao = new CSVLibBasedAddressDaoImpl();
+            addressDao = CSVLibBasedAddressDaoImpl.getAddressDaoInstance();
         } else if (csvChoice.equalsIgnoreCase("csvNonLib")) {
-            addressDao = new FileCsvBasedAddressDaoImpl();
+            addressDao = FileCsvBasedAddressDaoImpl.getAddressDaoInstance();
         }
 
         return addressDao;

@@ -13,6 +13,7 @@ public class Student implements java.io.Serializable {
 	private int departmentId;
 	private int doorNo;
 
+
 	public Student() {
 
 	}
@@ -25,13 +26,12 @@ public class Student implements java.io.Serializable {
 		this.doorNo = doorNo;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public void setName(String name)
-
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 

@@ -4,7 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import com.sekhar.student.dao.student.FileBasedStudentDao;
-import com.sekhar.student.model.Address;
+
 import com.sekhar.student.model.Student;
 
 import java.io.*;
@@ -17,13 +17,20 @@ public class CSVLibBasedStudentDaoImpl implements FileBasedStudentDao {
     private File file;
     private String path;
     private File file2;
+    private static CSVLibBasedStudentDaoImpl studentDao = null;
 
-    public CSVLibBasedStudentDaoImpl() {
+    private CSVLibBasedStudentDaoImpl() {
 
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
         file = createFileObject("Students.csv");
         file2 = new File(path);
+    }
+
+    public static CSVLibBasedStudentDaoImpl getStudentDaoInstance() {
+        if (studentDao == null)
+            studentDao = new CSVLibBasedStudentDaoImpl();
+        return studentDao;
     }
 
     public File createFileObject(String filename) {

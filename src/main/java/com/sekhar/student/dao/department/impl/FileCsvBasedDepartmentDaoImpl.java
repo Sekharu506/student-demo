@@ -9,13 +9,20 @@ public class FileCsvBasedDepartmentDaoImpl implements FileBasedDepartmentDao {
     private File file;
     private String path;
     private File file2;
+    private static FileCsvBasedDepartmentDaoImpl departmentDao = null;
 
-    public FileCsvBasedDepartmentDaoImpl() {
+    private FileCsvBasedDepartmentDaoImpl() {
 
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
         file = createFileObject("Departments.csv");
         file2 = new File(path);
+    }
+
+    public static FileCsvBasedDepartmentDaoImpl getDapartmentDaoInstance() {
+        if (departmentDao == null)
+            departmentDao = new FileCsvBasedDepartmentDaoImpl();
+        return departmentDao;
     }
 
     public File createFileObject(String filename) {

@@ -11,6 +11,7 @@ public class Department implements java.io.Serializable {
 	private String departmentName;
 	private String[] courses;
 
+
 	public Department() {
 
 	}
@@ -20,6 +21,7 @@ public class Department implements java.io.Serializable {
 		this.departmentName = departmentName;
 		this.courses = courses;
 	}
+
 
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;

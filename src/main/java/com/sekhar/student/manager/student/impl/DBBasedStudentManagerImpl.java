@@ -9,7 +9,7 @@ public class DBBasedStudentManagerImpl implements StudentManager {
 	private DBBasedStudentDao studentDao;
 
 	public DBBasedStudentManagerImpl() {
-		studentDao = new DBBasedStudentDaoImpl();
+		studentDao = DBBasedStudentDaoImpl.getStudentDaoInstance();
 	}
 
 	public void addStudent(Student student) {

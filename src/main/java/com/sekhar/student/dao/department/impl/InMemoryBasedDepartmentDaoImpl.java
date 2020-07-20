@@ -9,9 +9,16 @@ import com.sekhar.student.dao.department.InMemoryBasedDepartmentDao;
 
 public class InMemoryBasedDepartmentDaoImpl implements InMemoryBasedDepartmentDao {
 	private Set<Department> departments;
+	private static InMemoryBasedDepartmentDaoImpl departmentDao = null;
 
-	public InMemoryBasedDepartmentDaoImpl() {
+	private InMemoryBasedDepartmentDaoImpl() {
 		departments = new HashSet<Department>();
+	}
+
+	public static InMemoryBasedDepartmentDaoImpl getDepartmentDaoInstance() {
+		if (departmentDao == null)
+			departmentDao = new InMemoryBasedDepartmentDaoImpl();
+		return departmentDao;
 	}
 
 	public void addDepartment(Department department) {

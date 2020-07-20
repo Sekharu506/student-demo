@@ -10,9 +10,9 @@ public class FileBasedDepartmentDaoFactory {
         FileBasedDepartmentDao departmentDao = null;
 
         if (csvChoice.equalsIgnoreCase("csvLib")) {
-            departmentDao = new CSVLibBasedDepartmentDaoImpl();
+            departmentDao = CSVLibBasedDepartmentDaoImpl.getDepartmentDaoInstance();
         } else if (csvChoice.equalsIgnoreCase("csvNonLib")) {
-            departmentDao = new FileCsvBasedDepartmentDaoImpl();
+            departmentDao = FileCsvBasedDepartmentDaoImpl.getDapartmentDaoInstance();
         }
 
         return departmentDao;

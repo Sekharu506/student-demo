@@ -11,7 +11,7 @@ public class InMemoryBasedDepartmentManagerImpl implements DepartmentManager {
 	private InMemoryBasedDepartmentDao departmentDao = null;
 
 	public InMemoryBasedDepartmentManagerImpl() {
-		departmentDao = new InMemoryBasedDepartmentDaoImpl();
+		departmentDao = InMemoryBasedDepartmentDaoImpl.getDepartmentDaoInstance();
 
 	}
 

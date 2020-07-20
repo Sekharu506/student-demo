@@ -16,14 +16,27 @@ public class CSVLibBasedAddressDaoImpl implements FileBasedAddressDao {
     private File file;
     private String path;
     private File file2;
+    private static CSVLibBasedAddressDaoImpl addressDao = null;
 
-    public CSVLibBasedAddressDaoImpl() {
 
+    private CSVLibBasedAddressDaoImpl() {
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
         file = createFileObject("Addresses.csv");
         file2 = new File(path);
+
+
     }
+
+    public static CSVLibBasedAddressDaoImpl getAddressDaoInstance() {
+        if (addressDao == null)
+        
+            addressDao = new CSVLibBasedAddressDaoImpl();
+        return addressDao;
+
+
+    }
+
 
     public File createFileObject(String filename) {
 

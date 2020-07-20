@@ -7,16 +7,24 @@ import java.io.*;
 
 
 public class FileCsvBasedStudentDaoImpl implements FileBasedStudentDao {
-   private File file;
+    private File file;
     private String path;
     private File file2;
+    private static FileCsvBasedStudentDaoImpl studentDao = null;
 
-    public FileCsvBasedStudentDaoImpl() {
+    private FileCsvBasedStudentDaoImpl() {
 
         this.path = "/home/cultuzz/student-demo-files/";
         file = new File(path);
         file = createFileObject("Students.csv");
         file2 = new File(path);
+    }
+
+    public static FileCsvBasedStudentDaoImpl getStudentDaoInstance() {
+        if (studentDao == null)
+
+            studentDao = new FileCsvBasedStudentDaoImpl();
+        return studentDao;
     }
 
     public File createFileObject(String filename) {

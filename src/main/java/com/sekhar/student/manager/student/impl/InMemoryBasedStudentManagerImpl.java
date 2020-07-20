@@ -13,7 +13,7 @@ public class InMemoryBasedStudentManagerImpl implements StudentManager {
 
 	public InMemoryBasedStudentManagerImpl() {
 
-		studentDao = new InMemoryBasedStudentDaoImpl();
+		studentDao = InMemoryBasedStudentDaoImpl.getStudentDaoInstance();
 
 	}
 
